@@ -1,6 +1,10 @@
 import os
 from flask import Flask
 from flask_mail import Mail
+from zksync_sdk import ZkSyncLibrary
+
+## initialize ZKsync SDK
+lib = ZkSyncLibrary()
 
 ### Flask extension objects instantiation ###
 mail = Mail()
