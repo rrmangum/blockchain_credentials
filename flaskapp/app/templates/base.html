@@ -52,7 +52,7 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-          <a class="button is-primary">
+          <a class="button is-primary" id="connectWallet" onclick="">
             <strong>Connect Wallet</strong>
           </a>
         </div>
@@ -68,11 +68,78 @@
           <p class="subtitle">
             {% block content%}
     
+
             {% endblock%}
           </p>
+          <p id="walletAddress"></p>
+          <p id="walletBalance"></p>
+
         </div>
       </section>
 
-    
+    <script type="text/javascript">
+      window.walletAddress = null
+      const connectWallet = document.getElementById("connectWallet")
+      const walletAddress = document.getElementById("walletAddress")
+      const walletBalance = document.getElementById("walletBalance")
+
+      function checkInstalled() {
+        if (typeof window.ethereum == 'undefined') {
+          walletAddress.innerText = "Metamask is not installed, please install it"
+          connectWallet.classList.remove()
+          connectWallet.classList.add()
+          return false
+        }
+        connectWallet.addEventListener('click', connectWalletWithMetamask)
+      }
+
+      async function connectWalletWithMetamask() {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+        .catch((e) => {
+          console.error(e.message)
+          return
+        })
+        if (!accounts) { return }
+
+        window.walletAddress = accounts[0]
+        walletAddress.innerText = window.walletAddress
+
+        connectWallet.innerText = "Disconnect Wallet"
+        connectWallet.removeEventListener('click', connectWalletWithMetamask)
+        setTimeout(() => {
+          connectWallet.addEventListener('click', signOutOfMetamask)
+        }, 200)
+      }
+
+      function signOutOfMetamask() {
+        window.walletAddress = null
+        walletAddress.innerText = ''
+        connectWallet.innerText = 'Connect Wallet'
+
+        connectWallet.removeEventListener('click', signOutOfMetamask)
+        setTimeout(() => {
+          connectWallet.addEventListener('click', connectWalletWithMetamask)
+        }, 200)
+      }
+
+      window.addEventListener('DOMContentLoaded', () => {
+        checkInstalled()
+      });
+    </script>
 </body>
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <strong>Blockchain Identity Project</strong> by <a href="https://github.com/rrmangum/blockchain_identity">Team #3</a>
+    </p>
+  </div>
+</footer>
 </html>
+<style>
+  .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 20px;
+ }
+</style>
