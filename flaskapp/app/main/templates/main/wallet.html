@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Wallet Page Title</title>
-</head>
-<body>
-
+{% extends 'base.html' %}
+{% block title%}Wallet Page{% endblock %}
+{% block heading%}First zkSync Data{% endblock%}
+{% block content %}
     <h1>Ethereum Signer is: {{account.address}}</h1>
-</body>
-</html>
+{% endblock %}
 
