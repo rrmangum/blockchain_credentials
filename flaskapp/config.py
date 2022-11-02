@@ -35,7 +35,8 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    # SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, 'dev.db')
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:password@localhost/blockchain_identity'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class TestingConfig(Config):
     TESTING = True
