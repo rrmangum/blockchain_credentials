@@ -2,33 +2,26 @@
 <html lang="en">
   <head>
       <meta charset="utf-8">
-      <title>Flask SQL Tutorial</title>
+      <title>User Create</title>
   </head>
     <form class="form" id="form" action="/"  method="POST">
         <div class="title">Welcome</div>
         <div class="subtitle">Let's create your account!</div>
         <div class="input-container ic1">
-        <input name="username" class="input" type="text" placeholder=" " />
+        <input name="username" class="input" type="text" value="{{ request.form['username'] }}"placeholder=" " />
         <div class="cut"></div>
         <label for="username" class="placeholder">Username</label>
         </div>
         <div class="input-container ic2">
-        <input name="email" class="input" type="text" placeholder=" " />
+        <input name="email" class="input" type="text" value="{{ request.form['email'] }}" placeholder=" " />
         <div class="cut"></div>
         <label for="email" class="placeholder">Email</label>
         </div>
-        <button type="text" class="submit">submit</button>
+        <button type="submit" class="submit">submit</button>
     </form>
     {% block if %}{% endblock %}
     <script type="text/javascript">
-        function submit () {
-            const username = document.getElementById("username")
-            const email = document.getElementById("email")
-            console.log(username)
-            console.log(email)
-        }
     </script> 
-
     <style>
         body {
         align-items: center;

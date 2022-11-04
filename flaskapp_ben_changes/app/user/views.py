@@ -19,16 +19,23 @@ def index():
     return render_template('/index.html')
 
 # Handles form submission 
+# @user_blueprint.route("/submit", methods=['GET', 'POST'])
+# def submit():
+#     form = MyForm()
+#     if form.validate_on_submit():
+#         username = request.form["username"]
+#         email = request.form["email"]
+#         id = random.randint(1, 1000000)
+#         entry = User(id, username, email)
+#         db.session.add(entry)
+#         db.session.commit()
+#         return redirect('/success')
+#     return render_template('index.html', form=form)
+
 @user_blueprint.route("/submit", methods=['GET', 'POST'])
 def submit():
-    form = MyForm()
-    if form.validate_on_submit():
-        username = request.form["username"]
-        email = request.form["email"]
-        id = random.randint(1, 1000000)
-        entry = User(id, username, email)
-        db.session.add(entry)
-        db.session.commit()
-        return redirect('/success')
-    return render_template('index.html', form=form)
-
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+            
+        return f"{username}, {email}"
