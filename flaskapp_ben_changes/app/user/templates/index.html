@@ -4,22 +4,37 @@
       <meta charset="utf-8">
       <title>User Creation Form</title>
   </head>
+  {% if username and email %}
+      <h1>Hello {{ username }} @ {{ email }}</h1>
+  {% else %}
     <form class="form" id="form" action="/users/submit"  method="post">
+        {{ form.hidden_tag() }}
         <div class="title">Welcome</div>
         <div class="subtitle">Let's create your account!</div>
         <div class="input-container ic1">
-        <input name="username" class="input" type="text" value="{{ request.form['username'] }}"placeholder=" " />
+            {{ form.username(
+                class="input"
+            ) }}
         <div class="cut"></div>
-        <label for="username" class="placeholder">Username</label>
+        {{ form.username.label(
+            class="placeholder"
+        ) }}
+        <!-- <label for="username" class="placeholder"></label> -->
         </div>
         <div class="input-container ic2">
-        <input name="email" class="input" type="text" value="{{ request.form['email'] }}" placeholder=" " />
+        <!-- <input name="email" class="input" type="text" value="{{ form.email() }}" placeholder=" " /> -->
+        {{ form.email(
+            class="input"
+        ) }}
         <div class="cut"></div>
-        <label for="email" class="placeholder">Email</label>
+        <label for="email" class="placeholder">{{ form.email.label }}</label>
         </div>
-        <button type="submit" class="submit">submit</button>
+        {{ form.submit(
+            class="submit"
+        ) }}
+        <!-- <button type="submit" class="submit" value="{{ form.submit() }}">Submit</button> -->
     </form>
-    {% block if %}{% endblock %}
+    {% endif %}
     <script type="text/javascript">
     </script> 
     <style>
