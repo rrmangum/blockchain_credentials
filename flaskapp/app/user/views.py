@@ -26,14 +26,17 @@ def new():
     form = MyForm()
 
     if form.validate_on_submit():
-        username = form.username.data
-        email = form.email.data
-        entry = User(email=email, name=username)
-        db.session.add(entry)
-        db.session.commit()
-        username = ''
-        email = ''
-        return render_template('success.html', form = form)
+        try:
+            username = form.username.data
+            email = form.email.data
+            entry = User(email=email, name=username)
+            db.session.add(entry)
+            db.session.commit()
+            username = ''
+            email = ''
+            return render_template('success.html', form = form)
+        except Exception:
+            return Exception
 
     return render_template('new.html', 
         username = username,
