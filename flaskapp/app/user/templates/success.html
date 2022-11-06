@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content%}
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<section class="hero is-large">
+    <div class="hero-body has-text-success">
+        <h1 class="is-size-1">Successfully created!! </h1>
+        <br/>
+        <h1 class="is-size-2">Your username is: {{ form.username.data }}</h1>
+        <h1 class="is-size-3">We have sent an email to: {{ form.email.data }}</h1>
+    </div>
+</section>
+{% endblock %}
