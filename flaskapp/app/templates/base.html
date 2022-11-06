@@ -1,82 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
+  <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-</head>
-<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Credentials</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+      @media(max-width: 500px) {
+        .reverse-columns {
+          flex-direction: column-reverse;
+          display: flex;
+        }
+      }
+
+      .titled {
+        font-family: 'Merriweather', serif !important;
+        font-size: 58px !important;
+        font-weight: 400 !important;
+        line-height: 64px !important;
+      }
+
+      .subtitled {
+        font-family: 'Merriweather', serif !important;
+        font-size: 22px !important;
+        font-weight: 400 !important;
+        line-height: 36px !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- NavBar va a todo lo ancho -->
     <nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="https://bulma.io">
-      <img src="https://i.ibb.co/TKZgQq0/Screen-Shot-2022-10-26-at-8-37-51-PM.png" width="112" height="28">
-    </a>
-
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item">
-        Home
-      </a>
-
-      <a class="navbar-item">
-        Documentation
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io">
+          <img src="/static/images/sample-logo.png" width="120">
         </a>
-        <div class="navbar-dropdown">
+      </div>
+
+      <div class="navbar-menu">
+
+        <div class="navbar-end">
           <a class="navbar-item">
-            About
+            FOR ISSUERS
           </a>
+
           <a class="navbar-item">
-            Contact
+            FOR INDIVIDUALS
           </a>
-          <hr class="navbar-divider">
+
           <a class="navbar-item">
-            Report an issue
+            ABOUT
           </a>
+
+          <a class="navbar-item" id="connectWallet">
+            CONNECT WALLET
+          </a>
+
         </div>
       </div>
-    </div>
+    </nav>
 
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-primary" id="connectWallet" onclick="">
-            <strong>Connect Wallet</strong>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
-    <section class="section">
-        <div class="container">
-          <h1 class="title">
-            {% block heading %}{% endblock%}
-          </h1>
-          <p class="subtitle">
-            {% block content%}
-    
 
-            {% endblock%}
-          </p>
-          <p id="walletAddress"></p>
-          <p id="walletBalance"></p>
+    {% block title %}
+    {% endblock%}
 
-        </div>
-      </section>
+    {% block heading %}
+    {% endblock%}
 
+    {% block content%}
+    {% endblock%}
+        
+    <p id="walletAddress"></p>
+    <p id="walletBalance"></p>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true
+      });
+    </script>
     <script type="text/javascript">
       window.walletAddress = null
       const connectWallet = document.getElementById("connectWallet")
@@ -104,7 +111,7 @@
         window.walletAddress = accounts[0]
         walletAddress.innerText = window.walletAddress
 
-        connectWallet.innerText = "Disconnect Wallet"
+        connectWallet.innerText = "DISCONNECT WALLET"
         connectWallet.removeEventListener('click', connectWalletWithMetamask)
         setTimeout(() => {
           connectWallet.addEventListener('click', signOutOfMetamask)
@@ -114,7 +121,7 @@
       function signOutOfMetamask() {
         window.walletAddress = null
         walletAddress.innerText = ''
-        connectWallet.innerText = 'Connect Wallet'
+        connectWallet.innerText = 'CONNECT WALLET'
 
         connectWallet.removeEventListener('click', signOutOfMetamask)
         setTimeout(() => {
@@ -126,20 +133,5 @@
         checkInstalled()
       });
     </script>
-</body>
-<footer class="footer">
-  <div class="content has-text-centered">
-    <p>
-      <strong>Blockchain Identity Project</strong> by <a href="https://github.com/rrmangum/blockchain_identity">Team #3</a>
-    </p>
-  </div>
-</footer>
+  </body>
 </html>
-<style>
-  .footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 20px;
- }
-</style>

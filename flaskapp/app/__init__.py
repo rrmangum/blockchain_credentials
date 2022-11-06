@@ -20,8 +20,12 @@ def create_app():
     CONFIG_TYPE = os.getenv('CONFIG_TYPE', default='config.DevelopmentConfig')
     app.config.from_object(CONFIG_TYPE)
     
-    db.init_app(app)
-    migrate.init_app(app, db)
+    
+    with app.app_context():
+      db.init_app(app)
+      db.create_all()
+        
+    # migrate.init_app(app, db)
 
     # Register blueprints
     register_blueprints(app)
