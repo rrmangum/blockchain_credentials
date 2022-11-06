@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content%}
+  {% if username and email %}
+      <h1>Hello {{ username }} @ {{ email }}</h1>
+  {% else %}
+    <form class="form" id="form"  method="post">
+        {{ form.hidden_tag() }}
+        <div class="title">Welcome</div>
+        <div class="subtitle">Let's create your account!</div>
+        <div class="column is-6 border">
+            <div class="input-container ic1">
+                {{ form.username(
+                    class="input is-medium is-info"
+                ) }}
+            <div class="cut"></div>
+            <strong>
+                {{ form.username.label(
+                    class="placeholder bold"
+                ) }}
+            </strong>
+            <!-- <label for="username" class="placeholder"></label> -->
+            </div>
+            <div class="input-container ic2">
+            <!-- <input name="email" class="input" type="text" value="{{ form.email() }}" placeholder=" " /> -->
+            {{ form.email(
+                class="input is-medium is-info"
+            ) }}
+            <div class="cut"></div>
+            <strong>
+                {{ form.email.label(
+                class="bold") }}
+            </strong>
+            <!-- <label for="email" class="placeholder"></label> -->
+            </div>
+            {{ form.submit(
+                class="button is-primary mt-4 mb-4"
+            ) }}
+        </div>
+    </form>
+    {% endif %}
+{% endblock %}
+
