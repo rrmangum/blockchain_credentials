@@ -1,4 +1,4 @@
-#This bluepint will deal with all user management and auth functionality 
+#This blueprint will deal with all user management and auth functionality 
 
 from flask import Blueprint
 

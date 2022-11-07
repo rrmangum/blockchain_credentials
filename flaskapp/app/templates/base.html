@@ -114,9 +114,8 @@
         if (!accounts) { return }
 
         window.walletAddress = accounts[0]
-        walletAddress.innerText = window.walletAddress
-        console.log(window.ethereum)
-
+        window.location.href = "/register-wallet/address=" + window.walletAddress
+        walletAddress.innerText = "Logged in with: " + window.walletAddress
         connectWallet.innerText = "DISCONNECT WALLET"
         connectWallet.removeEventListener('click', connectWalletWithMetamask)
         setTimeout(() => {

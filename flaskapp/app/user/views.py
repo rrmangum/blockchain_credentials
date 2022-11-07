@@ -4,11 +4,15 @@ from ..extensions import db
 from ..models import User
 from .forms import MyForm
 
+# Functionality to be determined
+# Could see user info in this section
 @user_blueprint.route("/")
 def users():
     return render_template("users.html")
 
 
+# Handles form and form submission, validation requires a valid email address and data for each form field
+# Form is pushed to the sql database
 @user_blueprint.route("/new", methods=['GET', 'POST'])
 def new():
     username = None
