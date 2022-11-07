@@ -2,23 +2,17 @@ from . import user_blueprint
 from flask import render_template, request, redirect, url_for
 from ..extensions import db
 from ..models import User
-# from forms import MyForm
+from .forms import MyForm
 
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired, Email
-
-# Class for form 
-class MyForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    submit = SubmitField('Submit')
-
+# Functionality to be determined
+# Could see user info in this section
 @user_blueprint.route("/")
 def users():
     return render_template("users.html")
 
 
+# Handles form and form submission, validation requires a valid email address and data for each form field
+# Form is pushed to the sql database
 @user_blueprint.route("/new", methods=['GET', 'POST'])
 def new_user():
     username = None

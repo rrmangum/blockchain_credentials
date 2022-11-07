@@ -46,11 +46,17 @@ def create_app():
 
 ### Helper Functions ###
 def register_blueprints(app):
+
   from app.main import main_blueprint
   from app.user import user_blueprint
   from app.credential import credential_blueprint
+  from app.roles import roles_blueprint
 
-  app.register_blueprint(main.main_blueprint)
+  from app.register_wallet import register_wallet_blueprint
+
+  app.register_blueprint(register_wallet_blueprint, url_prefix="/register-wallet")
+  app.register_blueprint(main_blueprint)
+  app.register_blueprint(roles_blueprint, url_prefix='/roles')
   app.register_blueprint(user.user_blueprint, url_prefix='/users')
   app.register_blueprint(credential.credential_blueprint, url_prefix='/credentials')
     

@@ -68,15 +68,13 @@
       </div>
     </nav>
 
-    
-      <section class="section">
-        <div class="container">
-          {% block content%}
-          {% endblock%}
-        </div>
-      </section>
-    
-        
+    <section class="section">
+      <div class="container">
+        {% block content%}
+        {% endblock%}
+      </div>
+    </section>
+   
     <p id="walletAddress"></p>
     <p id="walletBalance"></p>
     
@@ -111,13 +109,13 @@
         if (!accounts) { return }
 
         window.walletAddress = accounts[0]
-        walletAddress.innerText = window.walletAddress
-
+        walletAddress.innerText = "Logged in with: " + window.walletAddress
         connectWallet.innerText = "DISCONNECT WALLET"
         connectWallet.removeEventListener('click', connectWalletWithMetamask)
         setTimeout(() => {
           connectWallet.addEventListener('click', signOutOfMetamask)
         }, 200)
+        sendDoc()
       }
 
       function signOutOfMetamask() {
@@ -132,8 +130,15 @@
       }
 
       window.addEventListener('DOMContentLoaded', () => {
-        checkInstalled()
+        checkInstalled();
       });
+
+      function sendDoc() {
+        console.log("sendDoc()")
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/register-wallet/address=" + window.walletAddress, true);
+        xhttp.send();
+      }
     </script>
   </body>
 </html>
