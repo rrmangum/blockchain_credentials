@@ -1,5 +1,7 @@
 from datetime import datetime
 from .extensions import db
+from flask_appbuilder import Model
+from flask_appbuilder.models.mixins import ImageColumn
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -27,7 +29,7 @@ class UserRoles(db.Model):
     
 class Credential(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    wallet_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    wallet_id = db.Column(db.Integer, db.ForeignKey('wallet.id'))
     name = db.Column(db.String(50), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     

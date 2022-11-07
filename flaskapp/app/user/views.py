@@ -20,7 +20,7 @@ def users():
 
 
 @user_blueprint.route("/new", methods=['GET', 'POST'])
-def new():
+def new_user():
     username = None
     email = None
     form = MyForm()
