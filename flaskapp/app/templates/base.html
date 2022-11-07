@@ -46,10 +46,8 @@
       <div class="navbar-menu">
 
         <div class="navbar-end">
-          <a class="navbar-item">
-            FOR ISSUERS
-          </a>
-
+          <a class="navbar-item" href="/credentials" >FOR ISSUERS</a>  
+            
           <a class="navbar-item">
             FOR INDIVIDUALS
           </a>
@@ -70,19 +68,16 @@
       </div>
     </nav>
 
-
-    {% block title %}
-    {% endblock%}
-
-    {% block heading %}
-    {% endblock%}
-
-    {% block content%}
-    {% endblock%}
-    <div class="columns is-centered">
-      <p id="walletAddress"></p>
-      <p id="walletBalance"></p>
-    </div>    
+    <section class="section">
+      <div class="container">
+        {% block content%}
+        {% endblock%}
+      </div>
+    </section>
+   
+    <p id="walletAddress"></p>
+    <p id="walletBalance"></p>
+    
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
       AOS.init({

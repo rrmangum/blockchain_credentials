@@ -14,7 +14,7 @@ def users():
 # Handles form and form submission, validation requires a valid email address and data for each form field
 # Form is pushed to the sql database
 @user_blueprint.route("/new", methods=['GET', 'POST'])
-def new():
+def new_user():
     username = None
     email = None
     form = MyForm()
