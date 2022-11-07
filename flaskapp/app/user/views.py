@@ -2,17 +2,7 @@ from . import user_blueprint
 from flask import render_template, request, redirect, url_for
 from ..extensions import db
 from ..models import User
-# from forms import MyForm
-
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired, Email
-
-# Class for form 
-class MyForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    submit = SubmitField('Submit')
+from .forms import MyForm
 
 @user_blueprint.route("/")
 def users():
