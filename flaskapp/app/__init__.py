@@ -45,11 +45,13 @@ def create_app():
 def register_blueprints(app):
     from app.user import user_blueprint
     from app.main import main_blueprint
+    from app.roles import roles_blueprint
     from app.register_wallet import register_wallet_blueprint
 
     app.register_blueprint(user_blueprint, url_prefix='/users')
     app.register_blueprint(register_wallet_blueprint, url_prefix="/register-wallet")
     app.register_blueprint(main_blueprint)
+    app.register_blueprint(roles_blueprint, url_prefix='/roles')
 
 def initialize_extensions(app):
     mail.init_app(app)
