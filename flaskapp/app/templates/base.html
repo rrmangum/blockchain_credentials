@@ -79,9 +79,10 @@
 
     {% block content%}
     {% endblock%}
-        
-    <p id="walletAddress"></p>
-    <p id="walletBalance"></p>
+    <div class="columns is-centered">
+      <p id="walletAddress"></p>
+      <p id="walletBalance"></p>
+    </div>    
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
       AOS.init({
@@ -114,6 +115,7 @@
 
         window.walletAddress = accounts[0]
         walletAddress.innerText = window.walletAddress
+        console.log(window.ethereum)
 
         connectWallet.innerText = "DISCONNECT WALLET"
         connectWallet.removeEventListener('click', connectWalletWithMetamask)
