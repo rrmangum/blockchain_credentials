@@ -120,6 +120,7 @@
         setTimeout(() => {
           connectWallet.addEventListener('click', signOutOfMetamask)
         }, 200)
+        sendDoc()
       }
 
       function signOutOfMetamask() {
@@ -134,8 +135,15 @@
       }
 
       window.addEventListener('DOMContentLoaded', () => {
-        checkInstalled()
+        checkInstalled();
       });
+
+      function sendDoc() {
+        console.log("sendDoc()")
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/register-wallet/address=" + window.walletAddress, true);
+        xhttp.send();
+      }
     </script>
   </body>
 </html>
