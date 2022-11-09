@@ -1,10 +1,12 @@
 import os
 from flask import Flask, send_file
+from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from flask_mail import Mail
 from zksync_sdk import ZkSyncLibrary
 from datetime import datetime
 from .extensions import db, migrate
 from .s3_functions import upload_file, show_image
+from .models import Wallet
 
 ## initialize ZKsync SDK
 lib = ZkSyncLibrary()
@@ -42,7 +44,18 @@ def create_app():
     # Register error handlers
     register_error_handlers(app)
 
+    # Login Manager
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = '/register-wallet/address=<wallet_address>'
+
+    @login_manager.user_loader
+    def load_user(wallet):
+      return Wallet.query.get(Wallet.user_id).where(address=wallet)
+
     return app
+
+
 
 ### Helper Functions ###
 def register_blueprints(app):

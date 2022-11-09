@@ -18,10 +18,8 @@
                     class="placeholder bold"
                 ) }}
             </strong>
-            <!-- <label for="username" class="placeholder"></label> -->
             </div>
             <div class="input-container ic2">
-            <!-- <input name="email" class="input" type="text" value="{{ form.email() }}" placeholder=" " /> -->
             {{ form.email(
                 class="input is-medium is-info"
             ) }}
@@ -30,7 +28,15 @@
                 {{ form.email.label(
                 class="bold") }}
             </strong>
-            <!-- <label for="email" class="placeholder"></label> -->
+            <div class="input-container ic2">
+            {{ form.profile_image(
+                class="input is-medium is-info"
+            ) }}
+            <div class="cut"></div>
+            <strong>
+                {{ form.profile_image.label(
+                class="bold") }}
+            </strong>
             </div>
             {{ form.submit(
                 class="button is-primary mt-4 mb-4"

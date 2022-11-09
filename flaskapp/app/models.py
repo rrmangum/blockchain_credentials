@@ -1,18 +1,21 @@
 from datetime import datetime
 from .extensions import db
 from flask_appbuilder import Model
+from flask_login import UserMixin
 from flask_appbuilder.models.mixins import ImageColumn
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    name = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=True)
+    name = db.Column(db.String(50), unique=True, nullable=True)
+    profile_image = db.Column(db.String(200))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-class Wallet(db.Model):
+class Wallet(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     address = db.Column(db.String(100), unique=True, nullable=False)
+    last_connected_at = db.Column(db.DateTime, default=datetime.utcnow)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
 class Role(db.Model):
