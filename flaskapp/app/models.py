@@ -4,7 +4,7 @@ from flask_appbuilder import Model
 from flask_login import UserMixin
 from flask_appbuilder.models.mixins import ImageColumn
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True, nullable=True)
     name = db.Column(db.String(50), unique=True, nullable=True)

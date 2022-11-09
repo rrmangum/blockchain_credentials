@@ -1,5 +1,6 @@
 from . import user_blueprint
 from flask import render_template, request, redirect, url_for
+from flask_login import current_user
 from ..extensions import db
 from ..models import User
 from .forms import MyForm
@@ -13,8 +14,8 @@ def users():
 
 # Handles form and form submission, validation requires a valid email address and data for each form field
 # Form is pushed to the sql database
-@login_required
 @user_blueprint.route("/new", methods=['GET', 'POST'])
+@login_required
 def new_user():
     username = None
     email = None
@@ -26,14 +27,16 @@ def new_user():
             username = form.username.data
             email = form.email.data
             profile_image = form.profile_image.data
-            entry = User(email=email, name=username)
-            db.session.add(entry)
+            current_user.name = username
+            current_user.email = email
+            current_user.profile_image = profile_image
             db.session.commit()
             username = ''
             email = ''
+            profile_image = ''
             return render_template('success.html', form = form)
         except Exception:
-            return Exception
+             return Exception
 
     return render_template('new.html', 
         username = username,
