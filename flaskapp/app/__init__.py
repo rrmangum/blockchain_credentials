@@ -2,14 +2,14 @@ import os
 from flask import Flask, send_file
 from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from flask_mail import Mail
-from zksync_sdk import ZkSyncLibrary
+# from zksync_sdk import ZkSyncLibrary
 from datetime import datetime
 from .extensions import db, migrate
 from .s3_functions import upload_file, show_image
 from .models import User
 
 ## initialize ZKsync SDK
-lib = ZkSyncLibrary()
+# lib = ZkSyncLibrary()
 
 ### Flask extension objects instantiation ###
 mail = Mail()
