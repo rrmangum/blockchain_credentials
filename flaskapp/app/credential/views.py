@@ -17,12 +17,12 @@ def index():
             filename = secure_filename(img.filename)
             img.save(filename)
             s3.upload_file(
-                Bucket = BUCKET_NAME,
+                Bucket = CREDENTIAL_BUCKET,
                 Filename=filename,
                 Key = filename
             )
-            msg = "Upload Done ! "
-        return render_template("credential/index.html")    
+            msg = "Upload Done! "
+        return render_template("credential/index.html")
     
 
 @credential_blueprint.route("/new", methods=['GET'])

@@ -6,6 +6,7 @@ from flask_mail import Mail
 from datetime import datetime
 from .extensions import db, migrate
 from .s3_functions import upload_file, show_image
+from werkzeug.utils import secure_filename
 from .models import User
 
 ## initialize ZKsync SDK
@@ -21,6 +22,8 @@ def create_app():
     
     # Needed to handle uploads of credential image files
     UPLOAD_FOLDER = "uploads"
+    PROFILE_PIC_BUCKET = "blockchain-identity-profile-pics"
+    CREDENTIAL_BUCKET = "blockchain-identity"
 
     # Configure the flask app instance
     CONFIG_TYPE = os.getenv('CONFIG_TYPE', default='config.DevelopmentConfig')
@@ -52,6 +55,7 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
       return User.query.get(int(user_id))
+    
     return app
 
 

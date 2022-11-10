@@ -8,7 +8,7 @@ from ..models import Wallet
 def index():
     return render_template('main/index.html')
 
-@main_blueprint.route('/wallet')
+#@main_blueprint.route('/wallet')
 # def wallet():
 #     #  return render_tempalte('main/wallet.html')
 #     private_key = os.environ.get("MY_WALLET_PRIVATE_KEY")
