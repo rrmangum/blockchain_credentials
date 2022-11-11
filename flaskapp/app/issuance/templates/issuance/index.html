@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+    <div class="container box p-6 has-background-light">
+        <h1 class="title has-text-centered has-text-success">
+            Issuances for {{ credential.name }}
+        </h1>
+        </br>
+
+        <div class="columns is-vcentered reverse-columns">
+            
+            <div class="column is-one-third" data-aos="fade-down">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-square">
+                            <img src="{{ credential.url }}" alt="{{ credential.name }} Image">
+                        </figure>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="media"></div>
+                        <div class="media-left"></div>
+                    </div>
+                <div class="media-content">
+                <p class="title is-4">{{ credential.name }}</p>
+                <p class="subtitle is-6"></p>
+            </div>
+        </div>
+            
+            <div class="column is-two-third">
+                <table class="table is-fullwidth is-hoverable is-striped is-bordered">
+                    <thead >
+                        <tr>
+                            <th>Wallet Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for issuance in issuances %}
+                            <tr>
+                                <td>
+                                    {{ issuance.wallet.address }}
+                                </td>
+                                <td>
+                                    <p class="control">  
+                                        <button class="button is-danger is-pulled-right" type="button" onclick="#" disabled>Revoke</button>  
+                                    </p>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

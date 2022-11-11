@@ -3,6 +3,7 @@ from flask import render_template, request, redirect, url_for, flash, jsonify
 from ..extensions import db
 from ..models import Credential
 from ..models import Wallet
+from ..models import Issuance
 from .forms import CredentialForm
 from werkzeug.utils import secure_filename
 from ..s3_functions import *
@@ -58,12 +59,21 @@ def edit_credential(id):
 
 @credential_blueprint.route("/assign/<int:id>", methods=['GET', 'POST'])
 def assign_credential(id):
-    credential = Credential.query.get(id)
     if request.method == 'GET':
+        credential = Credential.query.get(id)
         wallets = Wallet.query.all()
-        return render_template("credential/assign.html", credential=credential, wallets=wallets)
+        return render_template("credential/assign.html", id=id, credential=credential, wallets=wallets)
     elif request.method == 'POST':
-        wallet_ids = request.form.getlist(credCheckbox)
+        credential = Credential.query.get(id)
+        wallet_ids = request.form.getlist('walletCheckbox')
         for id in wallet_ids:
-            pass
+            new_issuance = Issuance(
+                wallet_id = id,
+                credential_id = credential.id
+            )
+            db.session.add(new_issuance)
+            db.session.commit()
+        flash("Credential issued!")
+        return redirect(url_for("credential.index"))
+            
     
