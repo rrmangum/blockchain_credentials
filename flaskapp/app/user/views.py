@@ -36,10 +36,12 @@ def new_user():
                 username = ''
                 email = ''
                 profile_image = ''
+                flash("User Created")
                 return render_template('success.html', form = form)
             except Exception:
                 flash("Invalid Entry")
                 return Exception
+
 
         return render_template('new.html', 
             username = username,
