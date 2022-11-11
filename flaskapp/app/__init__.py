@@ -1,5 +1,5 @@
 import os
-from flask import Flask, send_file
+from flask import Flask, send_file, flash
 from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from flask_mail import Mail
 # from zksync_sdk import ZkSyncLibrary
@@ -22,9 +22,7 @@ def create_app():
     
     # Needed to handle uploads of credential image files
     UPLOAD_FOLDER = "uploads"
-    PROFILE_PIC_BUCKET = "blockchain-identity-profile-pics"
-    CREDENTIAL_BUCKET = "blockchain-identity"
-
+    
     # Configure the flask app instance
     CONFIG_TYPE = os.getenv('CONFIG_TYPE', default='config.DevelopmentConfig')
     app.config.from_object(CONFIG_TYPE)

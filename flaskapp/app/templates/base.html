@@ -70,6 +70,12 @@
 
     <section class="section">
       <div class="container">
+        {% for message in get_flashed_messages() %}
+          <div class="notification is-primary">
+            <button class="delete"></button>
+            <h2>{{ message }}</h2>
+          </div>
+        {% endfor %}
         {% block content%}
         {% endblock%}
       </div>
