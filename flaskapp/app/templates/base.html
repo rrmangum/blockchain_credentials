@@ -60,8 +60,7 @@
             CONNECT WALLET
           </a>
 
-          <a href="/users/new" class="navbar-item" id="connectWallet">
-            PROFILE
+          <a href="/users/new" class="navbar-item" id="profilePage">
           </a>
 
         </div>
@@ -116,6 +115,11 @@
           connectWallet.addEventListener('click', signOutOfMetamask)
         }, 200)
         sendDoc()
+        showProfile()
+      }
+
+      function showProfile() {
+        document.getElementById("profilePage").innerText = "PROFILE"
       }
 
       function signOutOfMetamask() {

@@ -10,7 +10,8 @@
         <div class="column is-6 border mx-6">
             <div class="input-container ic1">
                 {{ form.username(
-                    class="input is-medium is-info"
+                    class="input is-medium is-info",
+                    placeholder="Please Enter a unique Username"
                 ) }}
             <div class="cut"></div>
             <strong>
@@ -19,24 +20,30 @@
                 ) }}
             </strong>
             </div>
+            <br/>
             <div class="input-container ic2">
             {{ form.email(
-                class="input is-medium is-info"
+                class="input is-medium is-info",
+                placeholder="Please enter a unique Email"
             ) }}
             <div class="cut"></div>
             <strong>
+                
                 {{ form.email.label(
                 class="bold") }}
             </strong>
             <div class="input-container ic2">
+            <br/>
             {{ form.profile_image(
-                class="input is-medium is-info"
+                class="input is-medium is-info",
+                placeholder="Please enter a valid URL to a profile picture"
             ) }}
             <div class="cut"></div>
             <strong>
                 {{ form.profile_image.label(
                 class="bold") }}
             </strong>
+            <br/>
             </div>
             {{ form.submit(
                 class="button is-primary mt-4 mb-4"
