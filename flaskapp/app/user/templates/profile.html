@@ -17,7 +17,7 @@
                     </figure>
                 </div>
                 <div class="media-content">
-                    <p class="title is-4">{{ username }}</p>
+                    <p class="title is-4">{{ username }}<button class="button is-info is-small ml-2">Edit</button></p>
                     <p class="subtitle is-6">{{ email }}</p>
                 </div>
                 </div>
@@ -32,68 +32,8 @@
     </div>
     <div class="column is-two-thirds">
         <h1 class="heading is-size-3">{{ username }}'s Certificates</h1>
-        <div class="columns">
-            <div class="column is-one-quarter">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-square">
-                            <img src="https://media.istockphoto.com/id/1128426035/vector/elegant-blue-and-gold-diploma-certificate-template.jpg?s=612x612&w=0&k=20&c=u6nl2YC0OfpYpcNS3C97EZhgaJKs4IVh-Tc0a55M-wc=" alt="{{ username }}'s Certificate">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="media-content">
-                            <p class="title is-4">Certificate of Completion</p>
-                            <p class="subtitle is-6">American University</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="column is-one-quarter">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-square">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmhf9wV7pF2ozJOoPd_lbxZIjPaY473vG7wRaydxz2&s" alt="{{ username }}'s Certificate">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="media-content">
-                            <p class="title is-4">Certificate of Completion</p>
-                            <p class="subtitle is-6">American University</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="column is-one-quarter">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-square">
-                            <img src="https://static8.depositphotos.com/1062042/972/v/450/depositphotos_9725775-stock-illustration-gold-detailed-certificate.jpg" alt="{{ username }}'s Certificate">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="media-content">
-                            <p class="title is-4">Certificate of Completion</p>
-                            <p class="subtitle is-6">American University</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="column is-one-quarter">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-square">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUeG7AkgMifsi6MfOE4zvxETNefH4BWQeLMw&usqp=CAU" alt="{{ username }}'s Certificate">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="media-content">
-                            <p class="title is-4">Certificate of Completion</p>
-                            <p class="subtitle is-6">American University</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% block credential %}
+        {% endblock %}
     </div>
 </div>
 {% endblock %}
