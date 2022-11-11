@@ -56,8 +56,14 @@ def edit_credential(id):
     form = CredentialForm(obj=credential, csrf_enabled=False)
     return render_template("credential/edit.html", form=form, credential=credential)
 
-@credential_blueprint.route("/assign/<int:id>", methods=['GET'])
+@credential_blueprint.route("/assign/<int:id>", methods=['GET', 'POST'])
 def assign_credential(id):
     credential = Credential.query.get(id)
-    wallets = Wallet.query.all()
-    return render_template("credential/assign.html", credential = credential, wallets=wallets)
+    if request.method == 'GET':
+        wallets = Wallet.query.all()
+        return render_template("credential/assign.html", credential=credential, wallets=wallets)
+    elif request.method == 'POST':
+        wallet_ids = request.form.getlist(credCheckbox)
+        for id in wallet_ids:
+            pass
+    
