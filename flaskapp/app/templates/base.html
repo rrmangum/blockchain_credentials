@@ -31,18 +31,27 @@
         font-weight: 400 !important;
         line-height: 36px !important;
       }
+
+      #header-logo{
+        background: url(/static/images/sample-logo.png) no-repeat center center;
+        background-size: cover;
+        width: 264px;
+        height: 103px;
+      }
+      
     </style>
   </head>
 
   <body>
     <!-- NavBar va a todo lo ancho -->
     <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="/">
-          <img src="/static/images/sample-logo.png" width="120">
-        </a>
+      <div class="section">
+        <div class="container">
+          <div class="navbar-brand">
+              <img id="header-logo" class="navbar-item" href="/">
+          </div>
+        </div>
       </div>
-
       <div class="navbar-menu">
 
         <div class="navbar-end">

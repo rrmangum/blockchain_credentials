@@ -49,7 +49,7 @@ class Credential(db.Model):
     
 class Issuance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    wallet_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    wallet_id = db.Column(db.Integer, db.ForeignKey('wallet.id'), nullable=False)
     credential_id = db.Column(db.Integer, db.ForeignKey('credential.id'), nullable=False)
     expires_at = db.Column(db.DateTime)
     active = db.Column(db.Boolean, default=True)
