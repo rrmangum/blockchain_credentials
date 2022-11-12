@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
-{% block content%}
+{% block content %}
 <div class="columns">
-    <div class="column">
+    
+    <form class="column" id="form"  method="post">
+        {{ form.hidden_tag() }}
         <h1 class="heading is-size-3">{{ username }}'s profile</h1>
         <div class="card">
             <div class="card-image">
                 <figure class="image is-square">
                 <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image">
+                {{ form.profile_image(
+                    class="input is-medium is-info",
+                    placeholder="Please enter a valid URL to a profile picture",
+                    value=current_user.profile_image
+                ) }}
                 </figure>
             </div>
             <div class="card-content">
@@ -17,10 +24,23 @@
                     </figure>
                 </div>
                 <div class="media-content">
-                    <p class="title is-4">{{ username }}<a href="/users/edit"><button class="button is-info is-small ml-2">Edit</button></a></p>
-                    <p class="subtitle is-6">{{ email }}</p>
+                    <div class="title is-5">
+                    Username: 
+                    {{ form.username(
+                        class="input is-medium is-info",
+                        value=current_user.name
+                    ) }}<a href="/users"></a></div>
+                    <div class="title is-5">
+                    Email:
+                    {{ form.email(
+                        class="input is-medium is-info",
+                        value=current_user.email
+                    ) }}</div>
                 </div>
-                </div>
+            </div>
+                {{ form.submit(
+                    class="button is-danger is-small ml-2",
+                ) }}
             
                 <div class="content">
                 This is {{ username }}'s profile <a>{{ email }}</a>.
@@ -30,7 +50,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     <div class="column is-two-thirds">
         <h1 class="heading is-size-3">{{ username }}'s Certificates</h1>
         {% block credential %}

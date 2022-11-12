@@ -71,7 +71,7 @@
             CONNECT WALLET
           </a>
 
-          <a href="/users/new" class="navbar-item" id="profilePage">
+          <a href="/users" class="navbar-item" id="profilePage">
           </a>
 
         </div>
@@ -108,6 +108,7 @@
 
       function checkInstalled() {
         if (typeof window.ethereum == 'undefined') {
+          alert("Please Install Metamask!")
           walletAddress.innerText = "Metamask is not installed, please install it"
           connectWallet.classList.remove()
           connectWallet.classList.add()

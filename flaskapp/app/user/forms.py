@@ -8,3 +8,9 @@ class MyForm(FlaskForm):
     email = StringField('Email', validators=[Email()])
     profile_image = StringField('Profile Image URL', validators=[URL()])
     submit = SubmitField()
+
+class OptionalForm(FlaskForm):
+    username = StringField('Username', validators=[])
+    email = StringField('Email', validators=[Email()])
+    profile_image = StringField('Profile Image URL', validators=[URL()])
+    submit = SubmitField()
