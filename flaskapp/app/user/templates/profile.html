@@ -6,18 +6,26 @@
         <div class="card">
             <div class="card-image">
                 <figure class="image is-square">
-                <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image">
+                    {% if profile_image %}
+                    <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image">
+                    {% else %}
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"/>
+                    {% endif %}
                 </figure>
             </div>
             <div class="card-content">
                 <div class="media">
                 <div class="media-left">
                     <figure class="image is-48x48">
-                    <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image">
+                        {% if profile_image %}
+                        <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image">
+                        {% else %}
+                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"/>
+                        {% endif %}
                     </figure>
                 </div>
                 <div class="media-content">
-                    <p class="title is-4">{{ username }}<a href="/users/edit"><button class="button is-info is-small ml-2">Edit</button></a></p>
+                    <p class="title is-4">{{ username }}<a id="edit" href="/users/edit"><button class="button is-info is-small ml-2">Edit</button></a></p>
                     <p class="subtitle is-6">{{ email }}</p>
                 </div>
                 </div>
@@ -37,4 +45,6 @@
         {% endblock %}
     </div>
 </div>
+
+
 {% endblock %}

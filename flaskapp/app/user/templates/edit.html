@@ -8,19 +8,29 @@
         <div class="card">
             <div class="card-image">
                 <figure class="image is-square">
-                <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image">
-                {{ form.profile_image(
-                    class="input is-medium is-info",
-                    placeholder="Please enter a valid URL to a profile picture",
-                    value=current_user.profile_image
-                ) }}
-                </figure>
+                {% if profile_image %}
+                    <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image"/>
+                {% else %}
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"/>
+                {% endif %}
+            </figure>
+            <div class="title is-5">
+                Enter URL for Profile Image:
+            </div>
+            {{ form.profile_image(
+                class="input is-medium is-info",
+                placeholder="Please enter a valid URL to a profile picture",
+                value=current_user.profile_image) }} 
             </div>
             <div class="card-content">
                 <div class="media">
                 <div class="media-left">
                     <figure class="image is-48x48">
-                    <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image">
+                    {% if profile_image %}
+                        <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image"/>
+                    {% else %}
+                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"/>
+                    {% endif %}
                     </figure>
                 </div>
                 <div class="media-content">
@@ -40,6 +50,7 @@
             </div>
                 {{ form.submit(
                     class="button is-danger is-small ml-2",
+                    value="Save"
                 ) }}
             
                 <div class="content">
