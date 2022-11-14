@@ -1,5 +1,7 @@
 from . import credential_blueprint
 from flask import render_template, request, redirect, url_for, flash, jsonify
+import json
+import requests
 from ..extensions import db
 from ..models import Credential
 from ..models import Wallet
@@ -25,15 +27,30 @@ def index():
                 Filename=filename,
                 Key = filename
             )
-            full_filename = f"https://{os.environ['S3_CREDENTIAL_BUCKET_NAME']}.s3.amazonaws.com/{filename}"
+            full_s3_filename = f"https://{os.environ['S3_CREDENTIAL_BUCKET_NAME']}.s3.amazonaws.com/{filename}"
+            
+            # Save image to ipfs
+            img = request.files['file']
+            url = "https://api.pinata.cloud/pinning/pinFileToIPFS"
+            payload={'pinataOptions': '{"cidVersion": 1}', 'pinataMetadata': '{"name": "MyFile", "keyvalues": {"company": "unums"}}'}
+            files=[
+                ('file',(filename, open(filename, 'rb'), 'application/octet-stream'))
+            ]
+            headers = {
+                'Authorization': f"Bearer {os.environ['PINATA_JWT_KEY']}"
+            }
+            pinata_response = requests.post(url, headers=headers, data=payload, files=files)
             
             # Create new credential in DB
             new_credential = Credential(
                 name = form.name.data,
-                url = full_filename
+                url = full_s3_filename,
+                ipfs_url = f"https://gateway.pinata.cloud/ipfs/{json.loads(pinata_response.text)['IpfsHash']}"
             )
             db.session.add(new_credential)
             db.session.commit()
+            
+            # Flash status message and redirect to index
             flash("Credential added!")
             return redirect(url_for("credential.index"))
     
