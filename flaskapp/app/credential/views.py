@@ -58,8 +58,8 @@ def index():
             db.session.commit()
             
             # Remove the temp uploaded image file
-            if os.path.isfile(uploaded_image_path):
-                os.remove(uploaded_image_path)
+            # if os.path.isfile(uploaded_image_path):
+            #     os.remove(uploaded_image_path)
             
             # Flash status message and redirect to index
             flash("Credential added!")
