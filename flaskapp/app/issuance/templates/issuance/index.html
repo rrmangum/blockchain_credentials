@@ -33,6 +33,7 @@
                     <thead >
                         <tr>
                             <th>Wallet Address</th>
+                            <th>User</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -43,10 +44,13 @@
                                     {{ issuance.wallet.address }}
                                 </td>
                                 <td>
+                                    {{ issuance.wallet.user.name }} {{ issuance.wallet.user.email }}
+                                <td>
                                     <p class="control">  
                                         <button class="button is-danger is-pulled-right" type="button" onclick="#" disabled>Revoke</button>  
                                     </p>
                                 </td>
+
                             </tr>
                         {% endfor %}
                     </tbody>
