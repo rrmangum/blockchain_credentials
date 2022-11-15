@@ -19,6 +19,7 @@
 
                 <td>
                 Wallet Address : {{ wallet.address }}
+                
                 </td>
 
             </h2>
@@ -43,7 +44,8 @@
             <table class="table is-fullwidth is-hoverable is-striped is-bordered">
                 <thead >
                     <tr>
-                        <th>Name</th>
+                        <th>Credential</th>
+                        <th>Date Issued</th>
                         <th>Image</th>
                         
                     </tr>
@@ -51,26 +53,29 @@
                 <tbody>
 
                     <tbody>
-                        {% for credential in credentials %}
+                        {% for both in both %}
                             <tr>
                                 <td>
-                                    {{ credential.name }}
+                                    {{ both.credential.name}}<br>
+                                    {% if both.active == True %}
+                                    Active<br>
+                                    {% else %}
+                                    Expired<br>
+                                    {% endif %}
+                                    {{ wallet.address }}<br>
+                                    
+                                </td>
+                                <td >
+                                    {{ both.issued_at }}
+                                   
                                 </td>
                                 <td class="has-text-centered">
-                                    <img src="{{ credential.url }}" alt="Credential Image" width="100" height="100">
+                                    <img src="{{ both.credential.url }}" alt="Credential Image" width="100" height="100">
                                 </td>
                                 
                             </tr>
                         {% endfor %}
-                        {% for issuance in issuances %}
-                        <tr>
-                            <td>
-                                {{ issuance.active }}
-                            </td>
-                            <td>
-                                {{ issuance.issued_at }}
-                            </td>
-                        {% endfor %}
+                        
                         </tr>
                     </tbody>
                 </table>
