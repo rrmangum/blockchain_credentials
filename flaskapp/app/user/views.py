@@ -28,6 +28,8 @@ def user(user_id):
     return render_template('user.html', username=username, email=email, profile_image=profile_image, created_at=created_at, wallet=wallet, credentials=credentials, issuances=issuances)
 
 
+# Creates edit page for the user profile
+# Updates username, email and profile image based on changes made by the user
 @user_blueprint.route("/user/<user_id>/edit", methods=["GET", "POST"])
 @login_required
 def edit(user_id):
