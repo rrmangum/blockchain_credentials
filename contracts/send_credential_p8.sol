@@ -27,7 +27,7 @@ contract Credentials is ERC721URIStorage, ERC721Enumerable {
     function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize)
         internal
         override(ERC721, ERC721Enumerable)
-    {
+    {   require(from == address(0), "This credential cannot be transferred.");
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
 
