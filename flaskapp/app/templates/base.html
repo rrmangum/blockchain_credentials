@@ -59,11 +59,11 @@
         <div class="navbar-end">
           <a class="navbar-item" href="/credentials" >FOR ISSUERS</a>  
             
-          <a class="navbar-item" href="/wallets">
+          <a class="navbar-item" href="/">
             FOR INDIVIDUALS
           </a>
 
-          <a class="navbar-item">
+          <a class="navbar-item" href="/about">
             ABOUT
           </a>
 
@@ -134,12 +134,17 @@
         setTimeout(() => {
           connectWallet.addEventListener('click', signOutOfMetamask)
         }, 200)
-        sendDoc()
-        showProfile()
+        sendDoc();
+        showProfile();
       }
 
+
       function showProfile() {
-        document.getElementById("profilePage").innerText = "PROFILE"
+        if (window.walletAddress) document.getElementById("profilePage").innerText = "PROFILE";
+      }
+
+      function hideProfile() {
+        if (!window.walletAddress) document.getElementById("profilePage").innerText = ""
       }
 
       function signOutOfMetamask() {
@@ -151,6 +156,7 @@
         setTimeout(() => {
           connectWallet.addEventListener('click', connectWalletWithMetamask)
         }, 200)
+        hideProfile();
       }
 
       window.addEventListener('DOMContentLoaded', () => {

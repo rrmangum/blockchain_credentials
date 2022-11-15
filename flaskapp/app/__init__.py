@@ -69,11 +69,13 @@ def register_blueprints(app):
   from app.wallet import wallet_blueprint
   from app.register_wallet import register_wallet_blueprint
   from app.issuance import issuance_blueprint
+  from app.about import about_blueprint
 
   app.register_blueprint(register_wallet_blueprint, url_prefix="/register-wallet")
   app.register_blueprint(main_blueprint)
   app.register_blueprint(wallet_blueprint, url_prefix='/wallets')
   app.register_blueprint(user.user_blueprint, url_prefix='/users')
+  app.register_blueprint(about.about_blueprint, url_prefix='/about')
   
   credential.credential_blueprint.register_blueprint(issuance_blueprint, url_prefix='/issuances')
   

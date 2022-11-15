@@ -16,16 +16,17 @@ from ..s3_functions import *
 @login_required
 def user(user_id):
     wallet = Wallet.query.filter_by(user_id=current_user.id).first()
-    issuances = Issuance.query.filter_by(wallet_id=wallet.id).all()
-    credentials = []
-    for issuance in issuances:
-        credential = Credential.query.filter_by(id=issuance.credential_id).first()
-        credentials.append(credential)
+    # issuances = Issuance.query.filter_by(wallet_id=wallet.id).all()
+    credentials = db.session.query(Issuance).join(Credential, Issuance.credential_id==Credential.id).filter(Issuance.wallet_id == wallet.id).all()
+    # credentials = []
+    # for issuance in issuances:
+    #     credential = Credential.query.filter_by(id=issuance.credential_id).first()
+    #     credentials.append(credential)
     username = current_user.name
     email = current_user.email
     profile_image = current_user.profile_image
     created_at = current_user.created_at
-    return render_template('user.html', username=username, email=email, profile_image=profile_image, created_at=created_at, wallet=wallet, credentials=credentials, issuances=issuances)
+    return render_template('user.html', username=username, email=email, profile_image=profile_image, created_at=created_at, wallet=wallet, credentials=credentials)
 
 
 # Creates edit page for the user profile

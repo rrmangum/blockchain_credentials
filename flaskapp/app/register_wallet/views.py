@@ -7,19 +7,21 @@ from .forms import MyForm
 from datetime import datetime
 
 @register_wallet_blueprint.route('/', methods=["GET", "POST"])
-def register():
-    return "Register"
+def register(wallet_address):
+    form = MyForm()
+
+    return render_template('index.html', form=form, wallet_address=wallet_address)
 
 @register_wallet_blueprint.route('/address=<wallet_address>', methods=['GET', 'POST'])
 def register_wallet(wallet_address):
     res = Wallet.query.filter_by(address=str(wallet_address)).first()
+    form = MyForm()
     if res:
         res.last_connected_at = datetime.utcnow()
         db.session.commit()
         user_id = res.user_id
         user = User.query.filter_by(id=user_id).first()
         login_user(user)
-        return f"Successfully updated last visit time"
     else:
         # If no user, create a new user in the db
         u_entry = User()
@@ -35,5 +37,4 @@ def register_wallet(wallet_address):
         # login the user
         user = User.query.filter_by(id=user_id).first()
         login_user(user)
-        return f"Successfully added wallet and created user"
-    # return render_template('index.html', form=form, wallet_address=wallet_address)
+    return render_template('index.html', form=form, wallet_address=wallet_address)

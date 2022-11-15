@@ -41,25 +41,30 @@
     </div>
     <div class="column is-two-thirds">
         <h1 class="heading is-size-3">{{ username }}'s Certificates</h1>
-        {% for credential in credentials %}
-        <div class="columns">
-            <div class="column is-one-quarter">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-square">
-                            <img src="{{ credential.url }}">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="media-content">
-                            <p class="title is-4">{{ credential.name }}</p>
-                            <p class="subtitle is-6">{{ wallet.address }}</p>
+        <div class="columns is-multiline">
+            {% for credential in credentials %}
+                <div class="column is-one-quarter">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-square">
+                                <img src="{{ credential.credential.url }}">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="media-content">
+                                <p class="title is-4">{{ credential.credential.name }}</p>
+                                <p class="subtitle is-6">{{ wallet.address }}</p>
+                                {% if credential.active %}
+                                    <p class="subtitle is-6">Active</p>
+                                {% else %}
+                                    <p class="subtitle is-6">Inactive</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </div>
 
