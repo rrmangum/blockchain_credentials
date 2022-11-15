@@ -2,59 +2,67 @@ from . import user_blueprint
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import current_user
 from ..extensions import db
-from ..models import User, Credential, Wallet
+from ..models import User, Credential, Wallet, Issuance
 from .forms import MyForm, OptionalForm
 from flask_login import login_required
+from werkzeug.utils import secure_filename
+from ..s3_functions import *
+
+
 
 # Handles form and form submission, validation requires a valid email address and data for each form field
 # Form is pushed to the sql database
-@user_blueprint.route("/", methods=['GET', 'POST'])
+@user_blueprint.route("/user/<user_id>", methods=['GET', 'POST'])
 @login_required
-def users():
+def user(user_id):
     wallet = Wallet.query.filter_by(user_id=current_user.id).first()
-    credentials = Credential.query.filter_by(wallet_id=wallet.id).first()
+    issuances = Issuance.query.filter_by(wallet_id=wallet.id).all()
+    credentials = []
+    for issuance in issuances:
+        credential = Credential.query.filter_by(id=issuance.credential_id).first()
+        credentials.append(credential)
     username = current_user.name
     email = current_user.email
     profile_image = current_user.profile_image
     created_at = current_user.created_at
-    return render_template('users.html', username=username, email=email, profile_image=profile_image, created_at=created_at, wallet=wallet)
+    return render_template('user.html', username=username, email=email, profile_image=profile_image, created_at=created_at, wallet=wallet, credentials=credentials, issuances=issuances)
 
 
-@user_blueprint.route("/edit", methods=["GET", "POST"])
+@user_blueprint.route("/user/<user_id>/edit", methods=["GET", "POST"])
 @login_required
-def edit():
+def edit(user_id):
     form = OptionalForm()
     wallet = Wallet.query.filter_by(user_id=current_user.id).first()
     credentials = Credential.query.filter_by(wallet_id=wallet.id).first()
-    cur_image = current_user.profile_image
-    cur_username = current_user.name
-    cur_email = current_user.email
-    cur_profile_image = current_user.profile_image
-    created_at = current_user.created_at
+    created_at = current_user.created_at 
+    username = current_user.name
+    email = current_user.email
+    profile_image = current_user.profile_image
 
     if form.validate_on_submit():
-        try:
-            username = form.username.data
-            email = form.email.data
-            profile_image = form.profile_image.data
-            current_user.name = username
-            current_user.email = email
-            current_user.profile_image = profile_image
+        # Upload profile image to s3 bucket
+        img = request.files['file']
+        if img:
+            filename = secure_filename(img.filename)
+            img.save(filename)
+            s3.upload_file(
+                Bucket = os.environ['S3_PROFILE_PIC_BUCKET_NAME'],
+                Filename=filename,
+                Key = filename
+            )
+            full_filename = f"https://{os.environ['S3_PROFILE_PIC_BUCKET_NAME']}.s3.amazonaws.com/{filename}"
+            current_user.profile_image = full_filename
 
-            # img = request.files['file']
-            # filename = secure_filename(img.filename)
-            # img.save(filename)
-            # s3.upload_file(
-            #     Bucket = os.environ['S3_PROFILE_PIC_BUCKET_NAME'],
-            #     Filename=filename,
-            #     Key = filename
-            # )
-            # full_filename = f"https://{os.environ['S3_PROFILE_PIC_BUCKET_NAME']}.s3.amazonaws.com/{filename}"
 
-            db.session.commit()
+        # Update username, email, and profile image and upload to database
+        username = form.username.data
+        email = form.email.data
+        current_user.name = username
+        current_user.email = email
 
-            flash("User Profile Updated")
-            return redirect("/users")
-        except Exception:
-            flash("Please Make Edits to your user profile")
-    return render_template("edit.html", form=form, username=cur_username, email=cur_email, profile_image=cur_profile_image, created_at=created_at, wallet=wallet)
+        db.session.commit()
+
+        flash("User Profile Updated")
+        return redirect(url_for('user.user', user_id=user_id))
+
+    return render_template("edit.html", form=form, username=username, email=email, profile_image=profile_image, created_at=created_at, wallet=wallet)

@@ -25,7 +25,7 @@
                     </figure>
                 </div>
                 <div class="media-content">
-                    <p class="title is-4">{{ username }}<a id="edit" href="/users/edit"><button class="button is-info is-small ml-2">Edit</button></a></p>
+                    <p class="title is-4">{{ username }}<button id="edit" onclick="window.location.href='{{ url_for( 'user.edit', user_id=current_user.id) }}';" class="button is-info is-small ml-2">Edit</button></p>
                     <p class="subtitle is-6">{{ email }}</p>
                 </div>
                 </div>
@@ -41,8 +41,25 @@
     </div>
     <div class="column is-two-thirds">
         <h1 class="heading is-size-3">{{ username }}'s Certificates</h1>
-        {% block credential %}
-        {% endblock %}
+        {% for credential in credentials %}
+        <div class="columns">
+            <div class="column is-one-quarter">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-square">
+                            <img src="{{ credential.url }}">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media-content">
+                            <p class="title is-4">{{ credential.name }}</p>
+                            <p class="subtitle is-6">{{ wallet.address }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 

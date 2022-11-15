@@ -2,7 +2,7 @@
 {% block content %}
 <div class="columns">
     
-    <form class="column" id="form"  method="post">
+    <form class="column" id="form"  method="post" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <h1 class="heading is-size-3">{{ username }}'s profile</h1>
         <div class="card">
@@ -12,15 +12,19 @@
                     <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image"/>
                 {% else %}
                     <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"/>
-                {% endif %}
+                {% endif %} 
             </figure>
-            <div class="title is-5">
-                Enter URL for Profile Image:
-            </div>
-            {{ form.profile_image(
-                class="input is-medium is-info",
-                placeholder="Please enter a valid URL to a profile picture",
-                value=current_user.profile_image) }} 
+            <label class="file-label">
+                <input class="file-input" type="file" name="file" value="file">
+                <span class="file-cta">
+                <span class="file-icon">
+                    <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">
+                    Upload Photo
+                </span>
+                </span>
+            </label>
             </div>
             <div class="card-content">
                 <div class="media">
