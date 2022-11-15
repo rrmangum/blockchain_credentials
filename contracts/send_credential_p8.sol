@@ -7,7 +7,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 
 // Credentials inherit ERC721
-contract Credential is ERC721 {
+contract Credential is ERC721, IERC721Enumerable {
     // A constructor that sets the initial value of TokenId as well as calls ERC721 Constructor
     constructor() public ERC721("Credential", "CRED") {}
 
