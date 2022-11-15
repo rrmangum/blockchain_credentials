@@ -9,6 +9,8 @@ from .s3_functions import upload_file, show_image
 from werkzeug.utils import secure_filename
 from .models import User
 
+UPLOAD_FOLDER = 'app/uploads'
+
 ## initialize ZKsync SDK
 # lib = ZkSyncLibrary()
 
@@ -20,12 +22,12 @@ def create_app():
 
     app = Flask(__name__)
     
-    # Needed to handle uploads of credential image files
-    UPLOAD_FOLDER = "uploads"
-    
     # Configure the flask app instance
     CONFIG_TYPE = os.getenv('CONFIG_TYPE', default='config.DevelopmentConfig')
     app.config.from_object(CONFIG_TYPE)
+    
+    # Needed to handle uploads of credential image files
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     
     db.init_app(app)
     with app.app_context():
@@ -64,13 +66,13 @@ def register_blueprints(app):
   from app.main import main_blueprint
   from app.user import user_blueprint
   from app.credential import credential_blueprint
-  from app.roles import roles_blueprint
+  from app.wallet import wallet_blueprint
   from app.register_wallet import register_wallet_blueprint
   from app.issuance import issuance_blueprint
 
   app.register_blueprint(register_wallet_blueprint, url_prefix="/register-wallet")
   app.register_blueprint(main_blueprint)
-  app.register_blueprint(roles_blueprint, url_prefix='/roles')
+  app.register_blueprint(wallet_blueprint, url_prefix='/wallets')
   app.register_blueprint(user.user_blueprint, url_prefix='/users')
   
   credential.credential_blueprint.register_blueprint(issuance_blueprint, url_prefix='/issuances')

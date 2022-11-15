@@ -11,3 +11,7 @@ def index(credential_id):
         credential = Credential.query.get(credential_id)
         issuances = credential.issuances
         return render_template("issuance/index.html", issuances = issuances, credential = credential)
+
+
+# @issuance_blueprint.route("/individuals", methods=['GET'])
+# def individuals()

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+
+{% block content%}
+
+<div class="container">
+    <div class="columns  is-vcentered reverse-columns">
+        <div class="column
+            is-10-mobile 
+            is-10-tablet 
+            is-5-desktop 
+            is-5-widescreen 
+            is-5-fullhd " data-aos="fade-down">
+            <h1 class="title titled is-1 mb-6">
+            Your Credentials
+            </h1>
+            
+            <h2 class=" is-size-4 mb-6">
+
+                <td>
+                Wallet Address : {{ wallet.address }}
+                </td>
+
+            </h2>
+           
+            
+        </div>
+        <div data-aos="fade-right" class="column
+            is-10-mobile 
+            is-10-tablet 
+            is-4-desktop 
+            is-7-widescreen 
+            is-4-fullhd is-offset-1-fullhd">
+        </div>
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="columns is-vcentered reverse-columns">
+        <div class="column">
+            
+            <table class="table is-fullwidth is-hoverable is-striped is-bordered">
+                <thead >
+                    <tr>
+                        <th>Name</th>
+                        <th>Image</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tbody>
+                        {% for credential in credentials %}
+                            <tr>
+                                <td>
+                                    {{ credential.name }}
+                                </td>
+                                <td class="has-text-centered">
+                                    <img src="{{ credential.url }}" alt="Credential Image" width="100" height="100">
+                                </td>
+                                
+                            </tr>
+                        {% endfor %}
+                        {% for issuance in issuances %}
+                        <tr>
+                            <td>
+                                {{ issuance.active }}
+                            </td>
+                            <td>
+                                {{ issuance.issued_at }}
+                            </td>
+                        {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

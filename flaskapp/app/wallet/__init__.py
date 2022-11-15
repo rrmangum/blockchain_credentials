@@ -2,6 +2,6 @@
 
 from flask import Blueprint
 
-roles_blueprint = Blueprint('roles', __name__, template_folder='templates')
+wallet_blueprint = Blueprint('wallet', __name__, template_folder='templates')
 
 from . import views
