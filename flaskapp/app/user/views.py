@@ -48,6 +48,8 @@ def edit(user_id):
                 Filename=filename,
                 Key = filename
             )
+            if os.path.isfile(filename):
+                os.remove(filename)
             full_filename = f"https://{os.environ['S3_PROFILE_PIC_BUCKET_NAME']}.s3.amazonaws.com/{filename}"
             current_user.profile_image = full_filename
         # Update username, email, and profile image and upload to database

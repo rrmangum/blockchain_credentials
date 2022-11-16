@@ -141,7 +141,7 @@
         })
         if (!accounts) { return }
 
-        window.walletAddress = utils.getAddress(accounts[0])
+        window.walletAddress = accounts[0]
         walletAddress.innerText = "Logged in with: " + window.walletAddress
         connectWallet.innerText = "DISCONNECT WALLET"
         connectWallet.removeEventListener('click', connectWalletWithMetamask)
