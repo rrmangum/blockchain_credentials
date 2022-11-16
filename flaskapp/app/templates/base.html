@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blockchain Credentials</title>
+    <link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
       integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -47,9 +48,9 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="section">
         <div class="container">
-          <div  class="navbar-brand">
+          <div  class="image is-64x64">
             <a href="/">
-              <img id="header-logo" class="navbar-item" >
+              <img id="header-logo" class="" src="../static/images/android-chrome-512x512.png">
             </a>
           </div>
         </div>
@@ -70,11 +71,13 @@
           <a class="navbar-item" id="connectWallet">
             CONNECT WALLET
           </a>
-
+          {% if current_user.id %}
           <a class="navbar-item" id="profilePage"
           onclick="window.location.href='{{ url_for( 'user.user', user_id=current_user.id) }}';"
           >
+            PROFILE
           </a>
+          {% endif %}
 
         </div>
       </div>
@@ -88,8 +91,8 @@
             <h2>{{ message }}</h2>
           </div>
         {% endfor %}
-        {% block content%}
-        {% endblock%}
+        {% block content %}
+        {% endblock %}
       </div>
     </section>
    
@@ -164,7 +167,6 @@
       });
 
       function sendDoc() {
-        console.log("sendDoc()")
         var xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/register-wallet/address=" + window.walletAddress, true);
         xhttp.send();
