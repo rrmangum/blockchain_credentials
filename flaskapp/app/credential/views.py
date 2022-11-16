@@ -10,6 +10,8 @@ from ..models import Issuance
 from .forms import CredentialForm
 from werkzeug.utils import secure_filename
 from ..s3_functions import *
+from ..w3_functions import *
+
 
 @credential_blueprint.route("/", methods=['GET', 'POST'])
 def index():
@@ -94,13 +96,14 @@ def assign_credential(id):
         credential = Credential.query.get(id)
         wallet_ids = request.form.getlist('walletCheckbox')
         for id in wallet_ids:
+            selected_wallet = Wallet.query.get(id)
             new_issuance = Issuance(
                 wallet_id = id,
                 credential_id = credential.id
             )
+            mint_token(selected_wallet.address, credential.url)
             db.session.add(new_issuance)
             db.session.commit()
+        
         flash("Credential issued!")
         return redirect(url_for("credential.index"))
-            
-    

@@ -10,6 +10,8 @@
                 <figure class="image is-square">
                 {% if profile_image %}
                     <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image"/>
+                {% elif img %}
+                    <img src="{{ full_filename }}" alt="{{ username }}'s Profile Image"/>
                 {% else %}
                     <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"/>
                 {% endif %} 
@@ -68,7 +70,7 @@
     </form>
     <div class="column is-two-thirds">
         <h1 class="heading is-size-3">{{ username }}'s Certificates</h1>
-        <div class="column is-two-thirds">
+        <div class="columns is-multiline">
             {% for credential in credentials %}
                 <div class="column is-one-quarter">
                     <div class="card">
@@ -91,7 +93,6 @@
                     </div>
                 </div>
             {% endfor %}
-            </div>
         </div>
     </div>
 </div>

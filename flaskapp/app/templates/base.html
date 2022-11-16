@@ -110,12 +110,13 @@
     <p id="walletBalance"></p>
     
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
+    <script>  
       AOS.init({
         once: true
       });
     </script>
     <script type="text/javascript">
+
       window.walletAddress = null
       const connectWallet = document.getElementById("connectWallet")
       const walletAddress = document.getElementById("walletAddress")
@@ -140,7 +141,7 @@
         })
         if (!accounts) { return }
 
-        window.walletAddress = accounts[0]
+        window.walletAddress = utils.getAddress(accounts[0])
         walletAddress.innerText = "Logged in with: " + window.walletAddress
         connectWallet.innerText = "DISCONNECT WALLET"
         connectWallet.removeEventListener('click', connectWalletWithMetamask)
