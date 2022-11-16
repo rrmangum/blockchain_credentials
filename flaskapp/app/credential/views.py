@@ -1,5 +1,8 @@
+
 from . import credential_blueprint
-from flask import render_template, request, redirect, url_for, flash, jsonify
+from flask import current_app, render_template, request, redirect, url_for, flash, jsonify
+import json
+import requests
 from ..extensions import db
 from ..models import Credential
 from ..models import Wallet
@@ -16,28 +19,52 @@ def index():
     elif request.method == 'POST':
         form = CredentialForm()
         if form.validate_on_submit():
-            # Save image to S3
+            
+            # Pull in image from form upload
             img = request.files['file']
+            # Secure the filename, remove weird or dangerous characters
             filename = secure_filename(img.filename)
-            img.save(filename)
+            # Save the file in local uploads dir on server
+            img.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+            uploaded_image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+            
+            # Save image to Amazon S3
             s3.upload_file(
                 Bucket = os.environ['S3_CREDENTIAL_BUCKET_NAME'],
-                Filename=filename,
+                Filename = uploaded_image_path,
                 Key = filename
             )
-            full_filename = f"https://{os.environ['S3_CREDENTIAL_BUCKET_NAME']}.s3.amazonaws.com/{filename}"
+            full_s3_url = f"https://{os.environ['S3_CREDENTIAL_BUCKET_NAME']}.s3.amazonaws.com/{filename}"
             
-            # Create new credential in DB
+            # Save image to IPFS
+            pinata_base_url = "https://api.pinata.cloud/pinning/pinFileToIPFS"
+            payload={'pinataOptions': '{"cidVersion": 1}', 'pinataMetadata': '{"name": "unums_credentials_file", "keyvalues": {"company": "unums"}}'}
+            files=[
+                ('file',(filename, open(uploaded_image_path, 'rb'), 'application/octet-stream'))
+            ]
+            headers = {
+                'Authorization': f"Bearer {os.environ['PINATA_JWT_KEY']}"
+            }
+            pinata_response = requests.post(pinata_base_url, headers=headers, data=payload, files=files)
+            full_ipfs_url = f"https://gateway.pinata.cloud/ipfs/{json.loads(pinata_response.text)['IpfsHash']}"
+            
+            # Create and save new credential record in DB, along with S3 and IPFS urls
             new_credential = Credential(
                 name = form.name.data,
-                url = full_filename
+                url = full_s3_url,
+                ipfs_url = full_ipfs_url
             )
             db.session.add(new_credential)
             db.session.commit()
+            
+            # Remove the temp uploaded image file
+            # if os.path.isfile(uploaded_image_path):
+            #     os.remove(uploaded_image_path)
+            
+            # Flash status message and redirect to index
             flash("Credential added!")
             return redirect(url_for("credential.index"))
     
-
 @credential_blueprint.route("/new", methods=['GET'])
 def new_credential():
     form = CredentialForm(csrf_enabled=False)

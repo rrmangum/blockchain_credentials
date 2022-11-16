@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="columns">
+<div class="columns mainFont">
     
-    <form class="column" id="form"  method="post">
+    <form class="column" id="form"  method="post" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <h1 class="heading is-size-3">{{ username }}'s profile</h1>
         <div class="card">
@@ -12,15 +12,19 @@
                     <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image"/>
                 {% else %}
                     <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"/>
-                {% endif %}
+                {% endif %} 
             </figure>
-            <div class="title is-5">
-                Enter URL for Profile Image:
-            </div>
-            {{ form.profile_image(
-                class="input is-medium is-info",
-                placeholder="Please enter a valid URL to a profile picture",
-                value=current_user.profile_image) }} 
+            <label class="file-label ml-4">
+                <input class="file-input" type="file" name="file" value="file">
+                <span class="file-cta">
+                <span class="file-icon">
+                    <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">
+                    Upload Photo
+                </span>
+                </span>
+            </label>
             </div>
             <div class="card-content">
                 <div class="media">
@@ -57,15 +61,38 @@
                 This is {{ username }}'s profile <a>{{ email }}</a>.
                 <br>
                 <time datetime="{{ created_at }}"> User since: {{ created_at.year }}</time>
-                <p>Wallet Address: {{ wallet.address }}</p>
+                <p id="walletAddress">{{ wallet.address }}</p>
                 </div>
             </div>
         </div>
     </form>
     <div class="column is-two-thirds">
         <h1 class="heading is-size-3">{{ username }}'s Certificates</h1>
-        {% block credential %}
-        {% endblock %}
+        <div class="column is-two-thirds">
+            {% for credential in credentials %}
+                <div class="column is-one-quarter">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-square">
+                                <img src="{{ credential.credential.url }}">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="media-content">
+                                <p class="title is-4">{{ credential.credential.name }}</p>
+                                <p class="subtitle is-6">{{ wallet.address }}</p>
+                                {% if credential.active %}
+                                    <p class="subtitle is-6">Active</p>
+                                {% else %}
+                                    <p class="subtitle is-6">Inactive</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

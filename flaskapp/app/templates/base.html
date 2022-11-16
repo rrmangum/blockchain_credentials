@@ -5,10 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blockchain Credentials</title>
+    <link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
       integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/garet" rel="stylesheet">
+
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
       @media(max-width: 500px) {
@@ -19,25 +22,33 @@
       }
 
       .titled {
-        font-family: 'Merriweather', serif !important;
+        font-family: 'Garet', sans-serif;
+
+        /* font-family: 'Merriweather', serif !important; */
         font-size: 58px !important;
         font-weight: 400 !important;
         line-height: 64px !important;
       }
 
       .subtitled {
-        font-family: 'Merriweather', serif !important;
+        font-family: 'Garet', sans-serif;
+
+        /* font-family: 'Merriweather', serif !important; */
         font-size: 22px !important;
         font-weight: 400 !important;
         line-height: 36px !important;
       }
 
-      #header-logo{
-        background: url(/static/images/sample-logo.png) no-repeat center center;
-        background-size: cover;
-        width: 264px;
-        height: 103px;
+      .mainFont {
+        font-family: 'Garet', sans-serif;
       }
+
+      #header-logo{
+        /* background: url(/static/images/VITAEWHITE.png); */
+        background-size: cover;
+        width: 205px;
+        height: 80px;
+      }  
       
     </style>
   </head>
@@ -47,32 +58,36 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="section">
         <div class="container">
-          <div  class="navbar-brand">
+          <div class="image">
             <a href="/">
-              <img id="header-logo" class="navbar-item" >
+              <img id="header-logo" src="/static/images/VITAEWHITE.png">
             </a>
           </div>
         </div>
       </div>
-      <div class="navbar-menu">
+      <div class="navbar-menu mainFont">
 
         <div class="navbar-end">
           <a class="navbar-item" href="/credentials" >FOR ISSUERS</a>  
             
-          <a class="navbar-item">
+          <a class="navbar-item" href="/">
             FOR INDIVIDUALS
           </a>
 
-          <a class="navbar-item">
+          <a class="navbar-item" href="/about">
             ABOUT
           </a>
 
           <a class="navbar-item" id="connectWallet">
             CONNECT WALLET
           </a>
-
-          <a href="/users" class="navbar-item" id="profilePage">
+          {% if current_user.id %}
+          <a class="navbar-item" id="profilePage"
+          onclick="window.location.href='{{ url_for( 'user.user', user_id=current_user.id) }}';"
+          >
+            PROFILE
           </a>
+          {% endif %}
 
         </div>
       </div>
@@ -86,8 +101,8 @@
             <h2>{{ message }}</h2>
           </div>
         {% endfor %}
-        {% block content%}
-        {% endblock%}
+        {% block content %}
+        {% endblock %}
       </div>
     </section>
    
@@ -132,12 +147,17 @@
         setTimeout(() => {
           connectWallet.addEventListener('click', signOutOfMetamask)
         }, 200)
-        sendDoc()
-        showProfile()
+        sendDoc();
+        showProfile();
       }
 
+
       function showProfile() {
-        document.getElementById("profilePage").innerText = "PROFILE"
+        if (window.walletAddress) document.getElementById("profilePage").innerText = "PROFILE";
+      }
+
+      function hideProfile() {
+        if (!window.walletAddress) document.getElementById("profilePage").innerText = ""
       }
 
       function signOutOfMetamask() {
@@ -149,6 +169,7 @@
         setTimeout(() => {
           connectWallet.addEventListener('click', connectWalletWithMetamask)
         }, 200)
+        hideProfile();
       }
 
       window.addEventListener('DOMContentLoaded', () => {
@@ -156,7 +177,6 @@
       });
 
       function sendDoc() {
-        console.log("sendDoc()")
         var xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/register-wallet/address=" + window.walletAddress, true);
         xhttp.send();
