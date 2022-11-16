@@ -1,62 +1,26 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts@4.7.3/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts@4.7.3/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts@4.7.3/access/Ownable.sol";
-import "@openzeppelin/contracts@4.7.3/utils/Counters.sol";
+import "@openzeppelin/contracts@4.7.0/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts@4.7.0/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts@4.7.0/access/Ownable.sol";
+import "@openzeppelin/contracts@4.7.0/utils/Counters.sol";
 
 contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
 
-    event Attest(address indexed to, uint256 indexed tokenId);
-    event Revoke(address indexed to, uint256 indexed tokenId);
-
     constructor() ERC721("DigitalCredential", "DC") {}
 
-    function safeMint(address to, string memory uri) public onlyOwner {
+    function safeMint(address to, string memory uri) public {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
     }
 
-    function burn(uint256 tokenId) external {
-        require(
-            ownerOf(tokenId) == msg.sender,
-            "Only the owner of the credential can delete it."
-        );
-        _burn(tokenId);
-    }
-
-    function revoke(uint256 tokenId) external onlyOwner {
-        _burn(tokenId);
-    }
-
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256
-    ) internal pure override {
-        require(
-            from == address(0) || to == address(0),
-            "You can't transfer this credential."
-        );
-    }
-
-    function _afterTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId
-    ) internal override {
-        if (from == address(0)) {
-            emit Attest(to, tokenId);
-        } else if (to == address(0)) {
-            emit Revoke(to, tokenId);
-        }
-    }
+    // The following functions are overrides required by Solidity.
 
     function _burn(uint256 tokenId)
         internal
@@ -72,5 +36,14 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
         returns (string memory)
     {
         return super.tokenURI(tokenId);
+    }
+
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal virtual override {
+        require(from == address(0), "This credential cannot be transferred.");
+        super._beforeTokenTransfer(from, to, tokenId);
     }
 }
