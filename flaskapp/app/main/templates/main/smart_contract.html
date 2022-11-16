@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container box p-6 has-background-light">
+      <h1 class="title has-text-centered has-text-success">
+        Smart Contract Sandbox
+      </h1>
+      <form method="POST" action="{{url_for('main.smart_contract')}}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        
+        <div class="field">
+            <label class="label">Credential Name</label>
+            <div class="control">
+                <input class="input" type="text" placeholder="Enter credential name" name="name"/>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="file is-boxed has-name">
+                <label class="file-label">
+                    <input class="file-input" type="file" name="file" value='file'>
+                    <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                        Choose a Credential Image…
+                    </span>
+                    </span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-success">
+                Add credential
+            </button>
+          </div>
+          <div class="control">
+            <button class="button is-link is-light">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+{% endblock %}

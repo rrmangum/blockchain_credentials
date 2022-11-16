@@ -11,10 +11,13 @@ from .forms import CredentialForm
 from werkzeug.utils import secure_filename
 from ..s3_functions import *
 from ..w3_functions import *
+from ..w3_functions import *
 
 
 @credential_blueprint.route("/", methods=['GET', 'POST'])
 def index():
+    w3 = Web3(Web3.HTTPProvider('https://sepolia.infura.io/v3/99ae78e4485c4500acc0328be6273305'))
+    
     if request.method == 'GET':
         credentials = Credential.query.all()
         return render_template("credential/index.html", credentials = credentials)
