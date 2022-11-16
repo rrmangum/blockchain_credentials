@@ -11,8 +11,7 @@ from .forms import CredentialForm
 from werkzeug.utils import secure_filename
 from ..s3_functions import *
 from ..w3_functions import *
-from ..w3_functions import *
-
+from web3 import Web3
 
 @credential_blueprint.route("/", methods=['GET', 'POST'])
 def index():
