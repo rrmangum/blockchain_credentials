@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
       integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/garet" rel="stylesheet">
+
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
       @media(max-width: 500px) {
@@ -20,21 +22,29 @@
       }
 
       .titled {
-        font-family: 'Merriweather', serif !important;
+        font-family: 'Garet', sans-serif;
+
+        /* font-family: 'Merriweather', serif !important; */
         font-size: 58px !important;
         font-weight: 400 !important;
         line-height: 64px !important;
       }
 
       .subtitled {
-        font-family: 'Merriweather', serif !important;
+        font-family: 'Garet', sans-serif;
+
+        /* font-family: 'Merriweather', serif !important; */
         font-size: 22px !important;
         font-weight: 400 !important;
         line-height: 36px !important;
       }
 
+      .mainFont {
+        font-family: 'Garet', sans-serif;
+      }
+
       #header-logo{
-        background: url(/static/images/sample-logo.png) no-repeat center center;
+        background: url(/static/images/VITAEWHITE.png);
         background-size: cover;
         width: 205px;
         height: 80px;
@@ -48,14 +58,14 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="section">
         <div class="container">
-          <div  class="image is-64x64">
+          <div class="image">
             <a href="/">
-              <img id="header-logo" class="" src="../static/images/android-chrome-512x512.png">
+              <img id="header-logo" class="">
             </a>
           </div>
         </div>
       </div>
-      <div class="navbar-menu">
+      <div class="navbar-menu mainFont">
 
         <div class="navbar-end">
           <a class="navbar-item" href="/credentials" >FOR ISSUERS</a>  
