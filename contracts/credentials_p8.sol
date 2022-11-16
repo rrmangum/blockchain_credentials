@@ -14,7 +14,7 @@ contract Credentials is ERC721URIStorage, ERC721Enumerable {
     constructor() ERC721("Credential", "CRED") {}
 
 
-    // Public funtion anyone can call. Returns TokenID
+    // Public funtion anyone can call. Returns TokenURI
     function BestowCredential(address owner, string memory token_URI) public returns (string memory){
         uint256 tokenId = totalSupply();
         _mint(owner, tokenId);
