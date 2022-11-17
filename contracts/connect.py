@@ -37,6 +37,13 @@ def BestowCredential(owner, token_uri):
     # st.write("Transaction receipt mined:")
     # st.write(dict(receipt))
 
+def VerifyCredential(owner, token_id):
+    if owner == contract.functions.ownerOf(token_id).call():
+        print('Individual holds selected credential')
+    else:
+        print('Individual does NOT hold selected credential')
+
+
 """ Below are some functions I thought would be useful for later"""
 # # Use the contract's `ownerOf` function to get the art token owner
 # owner = contract.functions.ownerOf(token_id).call()
