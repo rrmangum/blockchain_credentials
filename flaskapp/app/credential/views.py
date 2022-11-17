@@ -1,10 +1,10 @@
-
 from . import credential_blueprint
 from flask import current_app, render_template, request, redirect, url_for, flash, jsonify
+from flask_login import current_user
 import json
 import requests
 from ..extensions import db
-from ..models import Credential
+from ..models import Credential, Wallet
 from ..models import Wallet
 from ..models import Issuance
 from .forms import CredentialForm
@@ -18,7 +18,9 @@ def index():
     w3 = Web3(Web3.HTTPProvider('https://sepolia.infura.io/v3/99ae78e4485c4500acc0328be6273305'))
     
     if request.method == 'GET':
-        credentials = Credential.query.all()
+        user = current_user
+        wallet = Wallet.query.filter_by(user_id=user.id).first()
+        credentials = Credential.query.filter_by(wallet_id=wallet.id)
         return render_template("credential/index.html", credentials = credentials)
     elif request.method == 'POST':
         form = CredentialForm()
