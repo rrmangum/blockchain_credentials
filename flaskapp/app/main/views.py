@@ -93,9 +93,11 @@ def deploy_smart_contract():
             
             # Wait for the transaction to be mined
             tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-               
-        # Queue a flash message to the user and redirect to the index page    
-        flash(f"Contract deployed successfully with tx_hash: {tx_hash}")
+            
+            # Queue a flash message to the user and redirect to the index page    
+            flash(tx_hash.hex())
+        
+        # flash(tx_receipt)
         return redirect(url_for("main.index"))
 
 
