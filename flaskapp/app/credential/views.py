@@ -74,13 +74,13 @@ def new_credential():
     form = CredentialForm(csrf_enabled=False)
     return render_template("credential/new.html", form=form)
 
-@credential_blueprint.route("/<int:id>", methods=['DELETE'])
+@credential_blueprint.route("/<int:id>/delete")
 def delete_credential(id):
     credential = Credential.query.get(id)
     db.session.delete(credential)
     db.session.commit()
     flash("Credential deleted!")
-    return jsonify({})
+    return redirect(url_for("credential.index"))
 
 @credential_blueprint.route("/<int:id>", methods=['GET'])
 def edit_credential(id):
