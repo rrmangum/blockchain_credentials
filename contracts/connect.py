@@ -30,12 +30,18 @@ def BestowCredential(owner, token_uri):
     
     # Use the contract to send a transaction to the BestowCredential function
     tx_hash = contract.functions.BestowCredential(
-        address,
-        artwork_uri
+        owner,
+        token_uri
     ).transact({'from': address, 'gas': 1000000})
     # receipt = w3.eth.waitForTransactionReceipt(tx_hash)
     # st.write("Transaction receipt mined:")
     # st.write(dict(receipt))
+
+def VerifyCredential(owner, token_id):
+    if owner == contract.functions.ownerOf(token_id).call():
+        print('Individual holds selected credential')
+    else:
+        print('Individual does NOT hold selected credential')
 
 
 """ Below are some functions I thought would be useful for later"""
