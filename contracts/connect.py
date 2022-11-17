@@ -30,13 +30,12 @@ def BestowCredential(owner, token_uri):
     
     # Use the contract to send a transaction to the BestowCredential function
     tx_hash = contract.functions.BestowCredential(
-        address,
-        artwork_uri
+        owner,
+        token_uri
     ).transact({'from': address, 'gas': 1000000})
     # receipt = w3.eth.waitForTransactionReceipt(tx_hash)
     # st.write("Transaction receipt mined:")
     # st.write(dict(receipt))
-
 
 """ Below are some functions I thought would be useful for later"""
 # # Use the contract's `ownerOf` function to get the art token owner
