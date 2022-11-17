@@ -16,11 +16,13 @@ from web3 import Web3
 @credential_blueprint.route("/", methods=['GET', 'POST'])
 def index():
     w3 = Web3(Web3.HTTPProvider('https://sepolia.infura.io/v3/99ae78e4485c4500acc0328be6273305'))
-    
+    user = current_user
+    wallet = Wallet.query.filter_by(user_id=user.id).first()
     if request.method == 'GET':
+        # Get the current user and display the credentials associated with their wallet
         user = current_user
         wallet = Wallet.query.filter_by(user_id=user.id).first()
-        credentials = Credential.query.filter_by(wallet_id=wallet.id)
+        credentials = Credential.query.filter_by(wallet_id=wallet.id).all()
         return render_template("credential/index.html", credentials = credentials)
     elif request.method == 'POST':
         form = CredentialForm()
@@ -57,6 +59,7 @@ def index():
             # Create and save new credential record in DB, along with S3 and IPFS urls
             new_credential = Credential(
                 name = form.name.data,
+                wallet_id = wallet.id,
                 url = full_s3_url,
                 ipfs_url = full_ipfs_url
             )
