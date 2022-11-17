@@ -33,12 +33,12 @@ def BestowCredential(owner, token_uri):
         owner,
         token_uri
     ).transact({'from': address, 'gas': 1000000})
-    # receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-    # st.write("Transaction receipt mined:")
-    # st.write(dict(receipt))
+    receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+    print(receipt)
+  
 
-def VerifyCredential(owner, token_id):
-    if owner == contract.functions.ownerOf(token_id).call():
+def VerifyCredential(address, token_id):
+    if address == contract.functions.ownerOf(token_id).call():
         print('Individual holds selected credential')
     else:
         print('Individual does NOT hold selected credential')

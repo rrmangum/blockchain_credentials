@@ -17,7 +17,7 @@ contract Credentials is ERC721URIStorage, ERC721Enumerable {
     // Public funtion anyone can call. Returns TokenURI
     function BestowCredential(address owner, string memory token_URI) public returns (string memory){
         uint256 tokenId = totalSupply();
-        _mint(owner, tokenId);
+        string transactionHash = _mint(owner, tokenId);
         _setTokenURI(tokenId, token_URI);
 
         return token_URI; 
