@@ -10,6 +10,7 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
       integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://fonts.cdnfonts.com/css/garet" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
     <!-- <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -97,7 +98,7 @@
       <div class="container">
         {% for message in get_flashed_messages() %}
           <div class="notification is-primary">
-            <button class="delete"></button>
+            <button class="delete" onclick="delete_flash(this)"></button>
             <h2>{{ message }}</h2>
           </div>
         {% endfor %}
@@ -110,12 +111,13 @@
     <p id="walletBalance"></p>
     
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
+    <script>  
       AOS.init({
         once: true
       });
     </script>
     <script type="text/javascript">
+
       window.walletAddress = null
       const connectWallet = document.getElementById("connectWallet")
       const walletAddress = document.getElementById("walletAddress")
@@ -180,6 +182,10 @@
         var xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/register-wallet/address=" + window.walletAddress, true);
         xhttp.send();
+      }
+
+      function delete_flash(flash){
+        $(flash).parent().remove()
       }
     </script>
   </body>

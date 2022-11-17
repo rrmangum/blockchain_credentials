@@ -2,7 +2,11 @@
 {% block content%}
 <div class="columns mainFont">
     <div class="column">
+        {% if username %}
         <h1 class="heading is-size-3">{{ username }}'s profile</h1>
+        {% else %}
+        <h1 class="heading is-size-3">Unnamed User's profile</h1>
+        {% endif %}
         <div class="card">
             <div class="card-image">
                 <figure class="image is-square">
@@ -25,13 +29,25 @@
                     </figure>
                 </div>
                 <div class="media-content">
+                    {% if username %}
                     <p class="title is-4">{{ username }}<button id="edit" onclick="window.location.href='{{ url_for( 'user.edit', user_id=current_user.id) }}';" class="button is-info is-small ml-2">Edit</button></p>
+                    {% else %}
+                    <p class="title is-4">Unnamed User<button id="edit" onclick="window.location.href='{{ url_for( 'user.edit', user_id=current_user.id) }}';" class="button is-info is-small ml-2">Edit</button></p>
+                    {% endif %}
+                    {% if email%}
                     <p class="subtitle is-6">{{ email }}</p>
+                    {% else %}
+                    <p class="subtitle is-6">Edit to enter email</p>
+                    {% endif %}
                 </div>
                 </div>
             
                 <div class="content">
+                {% if username %}
                 This is {{ username }}'s profile <a>{{ email }}</a>.
+                {% else %}
+                This is Unnamed User's profile <a>No Email Address</a>.
+                {% endif %}
                 <br>
                 <time datetime="{{ created_at }}"> User since: {{ created_at.year }}</time>
                 <p>Wallet Address: {{ wallet.address }}</p>
@@ -40,7 +56,11 @@
         </div>
     </div>
     <div class="column is-two-thirds">
+        {% if username %}
         <h1 class="heading is-size-3">{{ username }}'s Certificates</h1>
+        {% else %}
+        <h1 class="heading is-size-3">Unnamed User's Certificates</h1>
+        {% endif %}
         <div class="columns is-multiline">
             {% for credential in credentials %}
                 <div class="column is-one-quarter">

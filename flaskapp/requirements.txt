@@ -20,6 +20,7 @@ eth-keys==0.3.4
 eth-rlp==0.2.1
 eth-typing==2.3.0
 eth-utils==1.9.5
+ethers == 0.1.1
 Flask==2.2.2
 Flask-AppBuilder 4.1.6
 Flask-login==0.6.2
