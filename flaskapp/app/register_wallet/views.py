@@ -10,7 +10,7 @@ from datetime import datetime
 def register(wallet_address):
     form = MyForm()
 
-    return render_template('index.html', form=form, wallet_address=wallet_address)
+    return render_template('register_wallet.html', form=form, wallet_address=wallet_address)
 
 @register_wallet_blueprint.route('/address=<wallet_address>', methods=['GET', 'POST'])
 def register_wallet(wallet_address):
@@ -37,4 +37,4 @@ def register_wallet(wallet_address):
         # login the user
         user = User.query.filter_by(id=user_id).first()
         login_user(user)
-    return render_template('index.html', form=form, wallet_address=wallet_address)
+    return render_template('register_wallet.html', form=form, wallet_address=wallet_address)
