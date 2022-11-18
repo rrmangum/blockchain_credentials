@@ -1,3 +1,4 @@
+from flask import flash
 from web3 import Web3
 from pathlib import Path
 import json
@@ -23,6 +24,7 @@ def mint_token(address, artwork_uri):
     ).transact({ 'from': address, 'gas': 1000000 })
 
     receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+    
     return receipt
 
    

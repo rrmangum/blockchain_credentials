@@ -74,12 +74,12 @@ def register_blueprints(app):
   app.register_blueprint(register_wallet_blueprint, url_prefix="/register-wallet")
   app.register_blueprint(main_blueprint)
   app.register_blueprint(wallet_blueprint, url_prefix='/wallets')
-  app.register_blueprint(user.user_blueprint, url_prefix='/users')
-  app.register_blueprint(about.about_blueprint, url_prefix='/about')
+  app.register_blueprint(user_blueprint, url_prefix='/users')
+  app.register_blueprint(about_blueprint, url_prefix='/about')
   
   credential.credential_blueprint.register_blueprint(issuance_blueprint, url_prefix='/issuances')
   
-  app.register_blueprint(credential.credential_blueprint, url_prefix='/credentials')
+  app.register_blueprint(credential_blueprint, url_prefix='/credentials')
   
   
 
