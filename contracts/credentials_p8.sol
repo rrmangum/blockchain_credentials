@@ -23,8 +23,8 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
     // Create Credential ERC721 token
     constructor() ERC721("Credential", "CRED") {}
 
-    // anyone can call safeMint function
-    function BestowCredential(address to, string memory uri) public {
+    // anyone can call BestowCredential function
+    function bestowCredential(address to, string memory uri) external {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
@@ -50,7 +50,7 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
     ///// VITAE contract specific functions /////
 
     // This function allows the owner of the token to burn it
-    function deleteCredential(uint256 tokenId) public {
+    function deleteCredential(uint256 tokenId) external {
         require(
             ownerOf(tokenId) == msg.sender,
             "Only the owner or the issuer of the credential can delete it."

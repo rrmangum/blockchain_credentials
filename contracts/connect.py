@@ -26,23 +26,50 @@ def load_contract():
 # Load the contract
 contract = load_contract()
 
+# Set the gas price strategy
+# w3.eth.setGasPriceStrategy(fast_gas_price_strategy)
+
+# Calculate the gas estimate
+# gasEstimate = w3.eth.estimateGas(
+#     "to": receiver,
+#     "from": account_address,
+#     "value": value
+# )
+
+# Mints credential
 def BestowCredential(owner, token_uri):
-    
     # Use the contract to send a transaction to the BestowCredential function
-    tx_hash = contract.functions.BestowCredential(
+    tx_hash = contract.functions.bestowCredential(
         owner,
         token_uri
     ).transact({'from': address, 'gas': 1000000})
     receipt = w3.eth.waitForTransactionReceipt(tx_hash)
     print(receipt)
   
-
+# Allows a verifier to supply a wallet address and a token ID to verify that address 
+# actually owns that specific token and the token was issued from our smart contract 
 def VerifyCredential(address, token_id):
     if address == contract.functions.ownerOf(token_id).call():
         print('Individual holds selected credential')
     else:
         print('Individual does NOT hold selected credential')
 
+# Allows a receiver to delete(burn) a credential
+def DeleteCredential(token_id):
+    tx_hash = contract.functions.deleteCredential(
+        token_id
+    ).transact({'from': address, 'gas': 1000000})
+    receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+    print(receipt)
+
+# Allows the smart contract owner (Ryan) to revoke credentials
+# TODO update function in smart contract to only allow issuer to revoke credential
+def RevokeCredential(token_id):
+    tx_hash = contract.functions.revokeCredential(
+        token_id
+    ).transact({'from': address, 'gas': 1000000})
+    receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+    print(receipt)
 
 """ Below are some functions I thought would be useful for later"""
 # # Use the contract's `ownerOf` function to get the art token owner
