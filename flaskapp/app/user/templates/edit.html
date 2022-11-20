@@ -8,16 +8,15 @@
         <div class="card">
             <div class="card-image">
                 <figure class="image is-square">
+                    <!-- If the user has a profile image we want to display it, otherwise we will use a blank photo -->
                 {% if profile_image %}
-                    <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image"/>
-                {% elif img %}
-                    <img src="{{ full_filename }}" alt="{{ username }}'s Profile Image"/>
+                    <img id="output" src="{{ profile_image }}" alt="{{ username }}'s Profile Image"/>
                 {% else %}
-                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"/>
+                    <img id="output" src="https://blog.za3k.com/wp-content/uploads/2015/03/default_profile_3.png"/>
                 {% endif %} 
             </figure>
             <label class="file-label ml-4">
-                <input class="file-input" type="file" name="file" value="file">
+                <input class="file-input" type="file" name="file" value="file" onchange="loadFile(event)">
                 <span class="file-cta">
                 <span class="file-icon">
                     <i class="fas fa-upload"></i>
@@ -33,9 +32,9 @@
                 <div class="media-left">
                     <figure class="image is-48x48">
                     {% if profile_image %}
-                        <img src="{{ profile_image }}" alt="{{ username }}'s Profile Image"/>
+                        <img id="outputSmall" src="{{ profile_image }}" alt="{{ username }}'s Profile Image"/>
                     {% else %}
-                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"/>
+                        <img id="outputSmall" src="https://blog.za3k.com/wp-content/uploads/2015/03/default_profile_3.png"/>
                     {% endif %}
                     </figure>
                 </div>
@@ -96,4 +95,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Creates a temporary url to store the uploaded photo and uses it to preview the users changes 
+    var loadFile = function(event) {
+     var output = document.getElementById('output');
+     var outputSmall = document.getElementById('outputSmall');
+     output.src = URL.createObjectURL(event.target.files[0]);
+     outputSmall.src = URL.createObjectURL(event.target.files[0])
+     console.log(output.src)
+     output.onload = function() {
+       URL.revokeObjectURL(output.src) // free memory
+       URL.revokeObjectURL(outputSmall.src) // free memory
+     }
+   };
+ </script>
 {% endblock %}
