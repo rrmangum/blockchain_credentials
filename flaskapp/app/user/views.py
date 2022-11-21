@@ -26,7 +26,7 @@ def user(user_id):
 
 # Creates edit page for the user profile
 # Updates username, email and profile image based on changes made by the user
-@user_blueprint.route("/user/<user_id>/edit", methods=["GET", "POST"])
+@user_blueprint.route("/<user_id>/edit", methods=["GET", "POST"])
 @login_required
 def edit(user_id):
     form = OptionalForm()

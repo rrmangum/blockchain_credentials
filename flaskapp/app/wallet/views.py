@@ -2,6 +2,7 @@ from . import wallet_blueprint
 
 from flask import render_template, request, redirect, url_for
 from flask_login import current_user
+from flask_login import login_required
 from ..extensions import db
 from ..models import Wallet
 from ..models import Credential
@@ -9,6 +10,7 @@ from ..models import Issuance
 
 
 @wallet_blueprint.route("/")
+@login_required
 def index():
 
     wallet = Wallet.query.filter_by(user_id=current_user.id).first()
@@ -26,3 +28,7 @@ def index():
     )
 
     return render_template("index.html", wallet=wallet, both=both)
+
+
+
+@wallet_blueprint.route("/delete/<int:id>")
