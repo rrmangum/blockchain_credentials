@@ -47,6 +47,11 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
         return super.tokenURI(tokenId);
     }
 
+    function totalSupply() public view returns (uint256)
+    {
+        return _tokenIdCounter.current();
+    }
+
     ///// VITAE contract specific functions /////
 
     // This function allows the owner of the token to burn it
