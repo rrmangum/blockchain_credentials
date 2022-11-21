@@ -4,7 +4,7 @@
 
     <div class="container box p-6 has-background-light">
         <h1 class="title has-text-centered has-text-success">
-            Issuances for {{ credential.name }}
+           Revoke Credentials for {{ credential.name }}
         </h1>
         </br>
 
@@ -27,37 +27,40 @@
                 <p class="subtitle is-6"></p>
             </div>
         </div>
-            
+        <form method="POST">
+            {{ form.hidden_tag() }}
             <div class="column is-two-third">
                 <table class="table is-fullwidth is-hoverable is-striped is-bordered">
                     <thead >
                         <tr>
+                            <th>Select</th>
                             <th>Wallet Address</th>
                             <th>User</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for issuance in issuances %}
                             <tr>
                                 <td>
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="issuanceCheckbox" value={{ issuance.id }}>
+                                    </label>
+                                </td>
+                                <td>
                                     {{ issuance.wallet.address }}
                                 </td>
                                 <td>
                                     {{ issuance.wallet.user.name }} {{ issuance.wallet.user.email }}
                                 <td>
-                                    <p class="control">  
-                                        <button class="button is-danger is-pulled-right" type="button" onclick="#" disabled>Revoke</button>  
-                                    </p>
                                 </td>
-
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+                            {% endfor %}
+                        </tbody> 
+                    </table>
+                </div>
+                <p class="control">  
+                    <div>{{ form.revoke(class="button is-danger is-pulled-right") }}</div>  
+                </p>
+        </form>
     </div>
-
 {% endblock %}
