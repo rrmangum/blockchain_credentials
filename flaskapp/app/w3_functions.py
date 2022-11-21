@@ -12,7 +12,7 @@ contract_address = os.getenv("SMART_CONTRACT_ADDRESS")
 
 
 # Mints the token into a specified address
-def mint_token(address, artwork_uri):
+def BestowCredential(address, artwork_uri):
     with open(Path('../contracts/credentials_abi.json')) as f:
         artwork_abi = json.load(f)
 
@@ -71,16 +71,6 @@ contract = load_contract()
 #     "from": account_address,
 #     "value": value
 # )
-
-# Mints credential
-def BestowCredential(owner, token_uri):
-    # Use the contract to send a transaction to the BestowCredential function
-    tx_hash = contract.functions.bestowCredential(
-        owner,
-        token_uri
-    ).transact({'from': address, 'gas': 1000000})
-    receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-    print(receipt)
   
 # Allows a verifier to supply a wallet address and a token ID to verify that address 
 # actually owns that specific token and the token was issued from our smart contract 

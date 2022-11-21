@@ -108,7 +108,7 @@ def assign_credential(id):
                 wallet_id = id,
                 credential_id = credential.id
             )
-            mint_token(selected_wallet.address, credential.url)
+            BestowCredential(selected_wallet.address, credential.url)
             db.session.add(new_issuance)
             db.session.commit()
         
