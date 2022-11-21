@@ -45,7 +45,7 @@ def show_token(contract, token_id):
 def load_contract():
 
     # Load the contract ABI
-    with open(Path('credentials_abi.json')) as f:
+    with open(Path('../credentials_abi.json')) as f:
         contract_abi = json.load(f)
 
     # Set the contract address (this is the address of the deployed contract)
