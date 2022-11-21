@@ -51,13 +51,10 @@
                                     <button type="submit" name="revokeButton" class="button is-danger is-pulled-right" value="{{ issuance.id }}">Revoke</button>
                                 </td>
                             </tr>
-                            {% endfor %}
-                        </tbody> 
-                    </table>
-                </div>
-                <p class="control">  
-                    <div>{{ form.revoke(class="button is-danger is-pulled-right") }}</div>  
-                </p>
+                        {% endfor %}
+                    </tbody> 
+                </table>
+            </div>
         </form>
     </div>
 {% endblock %}

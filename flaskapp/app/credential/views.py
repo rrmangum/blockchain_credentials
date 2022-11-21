@@ -1,6 +1,6 @@
 from . import credential_blueprint
 from flask import current_app, render_template, request, redirect, url_for, flash, jsonify
-from flask_login import current_user
+from flask_login import current_user, login_required
 import json
 import requests
 from ..extensions import db
@@ -14,6 +14,7 @@ from ..w3_functions import *
 from web3 import Web3
 
 @credential_blueprint.route("/", methods=['GET', 'POST'])
+@login_required
 def index():
     w3 = Web3(Web3.HTTPProvider('https://sepolia.infura.io/v3/99ae78e4485c4500acc0328be6273305'))
     user = current_user

@@ -32,5 +32,4 @@ def index(credential_id):
             issuance.revoked = True
             issuance.active = False
             db.session.commit()
-        return issuance_id
-    # return render_template("issuance/delete.html", issuances = issuances, credential = credential, form=form)
+    return render_template("issuance/delete.html", active_issuances = active_issuances, credential = credential, form=form)
