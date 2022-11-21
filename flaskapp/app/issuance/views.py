@@ -8,25 +8,29 @@ from .forms import RevokeForm
 @issuance_blueprint.route("/<int:credential_id>", methods=['GET', 'POST'])
 def index(credential_id):
     form = RevokeForm()
+    credential = Credential.query.get(credential_id)
+    issuances = credential.issuances
+    active_issuances = [] 
+    for issuance in issuances:
+        if issuance.active == True:
+            active_issuances.append(issuance)
+    # credential_issuance = db.session.query(Credential).join(Issuance, Credential.id==Issuance.credential_id).filter(Issuance.credential_id == credential_id).all()
+    
+
 
     if request.method == 'GET':
-        credential = Credential.query.get(credential_id)
-        issuances = credential.issuances
-        issuances = Issuance.query.filter_by(id=issuances).where(revoke=False)
-        return render_template("issuance/index.html", issuances = issuances, credential = credential, form=form)
+        return render_template("issuance/index.html", active_issuances = active_issuances, credential = credential, form=form)
 
     elif request.method == 'POST':
-        credential = Credential.query.get(credential_id)
-        issuances = credential.issuances
-
+        
         if form.validate_on_submit():     
-            # Request the checked issuances 
-            issuance_ids = request.form.getlist('issuanceCheckbox')
+            # Request the revoked issuance 
+            issuance_id = request.form.get('revokeButton')
 
             # Delete the issuances that the administrator checked
-            for issuance in issuance_ids:
-                issuance = Issuance.query.filter_by(id=int(issuance)).first()
-                issuance.revoked = True
-                issuance.is_active = False
+            issuance = Issuance.query.filter_by(id=int(issuance_id)).first()
+            issuance.revoked = True
+            issuance.active = False
             db.session.commit()
-    return render_template("issuance/index.html", issuances = issuances, credential = credential, form=form)
+        return issuance_id
+    # return render_template("issuance/delete.html", issuances = issuances, credential = credential, form=form)

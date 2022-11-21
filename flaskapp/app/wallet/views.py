@@ -12,12 +12,6 @@ from ..models import Issuance
 def index():
 
     wallet = Wallet.query.filter_by(user_id=current_user.id).first()
-    # issuances = Issuance.query.filter_by(wallet_id=wallet.id)
-
-    # credentials = []
-    # for issuance in issuances:
-    #     credential = Credential.query.filter_by(id=issuance.credential_id).first()
-    #     credentials.append(credential)
     both = (
         db.session.query(Issuance)
         .join(Credential, Issuance.credential_id == Credential.id)

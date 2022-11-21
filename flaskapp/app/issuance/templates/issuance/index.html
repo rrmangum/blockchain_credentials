@@ -33,25 +33,22 @@
                 <table class="table is-fullwidth is-hoverable is-striped is-bordered">
                     <thead >
                         <tr>
-                            <th>Select</th>
                             <th>Wallet Address</th>
                             <th>User</th>
+                            <th>Revoke</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for issuance in issuances %}
+                        {% for issuance in active_issuances %}
                             <tr>
-                                <td>
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="issuanceCheckbox" value={{ issuance.id }}>
-                                    </label>
-                                </td>
                                 <td>
                                     {{ issuance.wallet.address }}
                                 </td>
                                 <td>
                                     {{ issuance.wallet.user.name }} {{ issuance.wallet.user.email }}
+                                </td>
                                 <td>
+                                    <button type="submit" name="revokeButton" class="button is-danger is-pulled-right" value="{{ issuance.id }}">Revoke</button>
                                 </td>
                             </tr>
                             {% endfor %}
