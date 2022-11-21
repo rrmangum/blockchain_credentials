@@ -21,7 +21,7 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
     event Revoke(address indexed to, uint256 indexed tokenId);
 
     // Create Credential ERC721 token
-    constructor() ERC721("Credential", "CRED") {}
+    constructor() ERC721("Vitae Digital Credentials", "VDC") {}
 
     // anyone can call BestowCredential function
     function bestowCredential(address to, string memory uri) external {
