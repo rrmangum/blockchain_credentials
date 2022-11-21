@@ -1,0 +1,14 @@
+{
+    "name": "Financial Technology Certificate",
+
+    "attributes": {
+        "Issuer": "University of California Berkeley",
+        "Expiration Date": "Indefinite"
+    },
+
+    "description": "Certificate issued to graduates of the FinTech bootcamp",
+
+    "image": "https://gateway.pinata.cloud/ipfs/QmRg8eC2FjifdS1WUbEkG3b4P3ja1fNLFkLXdrKs3qChm8",
+
+    "external_url": "https://vitae.io"
+}
