@@ -4,6 +4,7 @@ from ..extensions import db
 from ..models import Credential
 from ..models import Issuance
 from .forms import RevokeForm
+from DateTime import DateTime
 
 @issuance_blueprint.route("/<int:credential_id>", methods=['GET', 'POST'])
 def index(credential_id):
@@ -29,7 +30,7 @@ def index(credential_id):
 
             # Delete the issuances that the administrator checked
             issuance = Issuance.query.filter_by(id=int(issuance_id)).first()
-            issuance.revoked = True
+            issuance.revoked_at = DateTime.utc_now()
             issuance.active = False
             db.session.commit()
     return render_template("issuance/delete.html", active_issuances = active_issuances, credential = credential, form=form)
