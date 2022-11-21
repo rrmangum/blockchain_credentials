@@ -45,7 +45,7 @@ def show_token(contract, token_id):
 def load_contract():
 
     # Load the contract ABI
-    with open(Path('../credentials_abi.json')) as f:
+    with open(Path('../contracts/credentials_abi.json')) as f:
         contract_abi = json.load(f)
 
     # Set the contract address (this is the address of the deployed contract)
@@ -81,18 +81,18 @@ def VerifyCredential(address, token_id):
         print('Individual does NOT hold selected credential')
 
 # Allows a receiver to delete(burn) a credential
-def DeleteCredential(token_id):
-    tx_hash = contract.functions.deleteCredential(
-        token_id
-    ).transact({'from': address, 'gas': 1000000})
-    receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-    print(receipt)
+# def DeleteCredential(token_id):
+#     tx_hash = contract.functions.deleteCredential(
+#         token_id
+#     ).transact({'from': address, 'gas': 1000000})
+#     receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+#     print(receipt)
 
-# Allows the smart contract owner (Ryan) to revoke credentials
-# TODO update function in smart contract to only allow issuer to revoke credential
-def RevokeCredential(token_id):
-    tx_hash = contract.functions.revokeCredential(
-        token_id
-    ).transact({'from': address, 'gas': 1000000})
-    receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-    print(receipt)
+# # Allows the smart contract owner (Ryan) to revoke credentials
+# # TODO update function in smart contract to only allow issuer to revoke credential
+# def RevokeCredential(token_id):
+#     tx_hash = contract.functions.revokeCredential(
+#         token_id
+#     ).transact({'from': address, 'gas': 1000000})
+#     receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+#     print(receipt)
