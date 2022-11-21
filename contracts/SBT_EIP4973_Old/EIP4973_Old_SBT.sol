@@ -29,6 +29,9 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
+        
+        // declare variable for issuer wallet 
+        // return tx hash
     }
 
     function _burn(uint256 tokenId)
