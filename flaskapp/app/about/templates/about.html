@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="mainFont">
-    <h1 class="title is-size-1">About Us</h1>
     <div class="card">
         <div class="card-media is-justify-content-center heroContainer">
             <img class="aboutImage" src="https://images.unsplash.com/photo-1530333821974-f9fcfd6718c8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"/>
             <div class="overlay">
-                <div class="text has-text-white is-size-2">Welcome to Vitae</div>
+                <div class="text has-text-white is-size-1">Welcome to Vitae</div>
             </div>
         </div>
         <div class="card-content">
@@ -29,7 +28,7 @@
             <p class="subtitle mt-4">Users instantly have proof of their accomplishments that exist in perpetuity. They can be certain their qualifications are made visible to anyone that needs access to them.</p>
         </div>
         <div class="card-content">
-            <p class="subtitle mt-4">For an overview of the technology that powers Vitae Digital Credentials, please see our dedicated <a href="">technology documentation</a></p>
+            <p class="subtitle mt-4">For an overview of the technology that powers Vitae Digital Credentials, please see our dedicated <a href="">technology documentation.</a></p>
         </div>
 
     </div>
@@ -63,6 +62,11 @@
         position: absolute;
         top: 40%;
         left: 35%;
+    }
+    .is-size-2 {
+        width: 75%;
+        margin: auto;
+        text-align: center;
     }
 </style>
 
