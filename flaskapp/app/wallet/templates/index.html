@@ -47,6 +47,7 @@
                         <th>Credential</th>
                         <th>Date Issued</th>
                         <th>Image</th>
+                        <th>Delete</th>
                         
                     </tr>
                 </thead>
@@ -54,6 +55,7 @@
 
                     <tbody>
                         {% for both in both %}
+                        {% if not both.deleted_at %}
                             <tr>
                                 <td>
                                     {{ both.credential.name}}<br>
@@ -71,8 +73,14 @@
                                 <td class="has-text-centered">
                                     <img src="{{ both.credential.url }}" alt="Credential Image" width="100" height="100">
                                 </td>
+                                <td >
+                                    <form action="/wallets/delete/{{both.id}}" METHOD="POST">
+                                    <button class="button is-danger is-rounded is-outlined is-small" name="now" type="submit" value={{ now }} id="{{ both.id }}">Delete</button>
+                                </form>
+                                </td>
                                 
                             </tr>
+                            {% endif %}
                         {% endfor %}
                         
                         </tr>
