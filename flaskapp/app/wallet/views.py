@@ -8,6 +8,7 @@ from ..extensions import db
 from ..models import Wallet
 from ..models import Credential
 from ..models import Issuance
+# from ..w3_functions import DeleteCredential
 
 
 @wallet_blueprint.route("/")
@@ -48,6 +49,9 @@ def delete(id):
         issuance_to_delete.deleted_at = now
 
         try:
+
+            # DeleteCredential()
+
             db.session.commit()
             flash("Issuance Deleted")
             return redirect('/wallets')  

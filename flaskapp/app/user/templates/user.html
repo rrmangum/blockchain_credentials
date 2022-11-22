@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content%}
 <div class="columns mainFont">
-    <div class="column">
+    <div class="column" data-aos="fade-down">
         {% if username %}
         <h1 class="heading is-size-3">{{ username }}'s profile</h1>
         {% else %}
@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-    <div class="column is-two-thirds">
+    <div class="column is-two-thirds" data-aos="fade-down">
         {% if username %}
         <h1 class="heading is-size-3">{{ username }}'s Certificates</h1>
         {% else %}
