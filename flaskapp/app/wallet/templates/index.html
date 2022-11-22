@@ -60,11 +60,15 @@
                                 <td>
                                     {{ both.credential.name}}<br>
                                     {% if both.active == True %}
+                                    {% if both.deleted_at %}
+                                    
+                                    {% else %}
                                     Active<br>
+                                    {% endif %}
                                     {% else %}
                                     Expired<br>
                                     {% endif %}
-                                    {{ wallet.address }}<br>
+                                    {{ both.transaction_hash }}<br>
                                 </td>
                                 <td >
                                     {{ both.issued_at }}
