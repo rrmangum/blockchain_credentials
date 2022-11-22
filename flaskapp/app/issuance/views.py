@@ -1,10 +1,9 @@
 from . import issuance_blueprint
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from ..extensions import db
-from ..models import Credential
-from ..models import Issuance
+from ..models import Issuance, Wallet, Credential
 from .forms import RevokeForm
-from DateTime import DateTime
+from datetime import datetime
 
 @issuance_blueprint.route("/<int:credential_id>", methods=['GET', 'POST'])
 def index(credential_id):
@@ -27,10 +26,14 @@ def index(credential_id):
         if form.validate_on_submit():     
             # Request the revoked issuance 
             issuance_id = request.form.get('revokeButton')
+            wallet = Wallet.query.filter_by(id=issuance.wallet_id).first()
 
             # Delete the issuances that the administrator checked
             issuance = Issuance.query.filter_by(id=int(issuance_id)).first()
-            issuance.revoked_at = DateTime.utc_now()
+            issuance.revoked_at = datetime.utcnow()
             issuance.active = False
             db.session.commit()
-    return render_template("issuance/delete.html", active_issuances = active_issuances, credential = credential, form=form)
+            flash(f"Successfully deleted issuance for: {wallet.address}")
+        return render_template("issuance/index.html", active_issuances = active_issuances, credential = credential, form=form)
+
+
