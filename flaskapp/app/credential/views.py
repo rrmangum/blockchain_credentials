@@ -105,13 +105,20 @@ def assign_credential(id):
         wallet_ids = request.form.getlist('walletCheckbox')
         for id in wallet_ids:
             selected_wallet = Wallet.query.get(id)
+            txn_hash = BestowCredential(selected_wallet.address, credential.url)
+            readable_hash = txn_hash.blockHash.hex()
+
             new_issuance = Issuance(
                 wallet_id = id,
-                credential_id = credential.id
+                credential_id = credential.id,
+                transaction_hash = readable_hash
+                
             )
-            BestowCredential(selected_wallet.address, credential.url)
+
+            
             db.session.add(new_issuance)
             db.session.commit()
         
         flash("Credential issued!")
         return redirect(url_for("credential.index"))
+        # return render_template("credential/test.html", id=id, credential=credential, txn_hash=txn_hash)
