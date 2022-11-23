@@ -23,7 +23,7 @@ def BestowCredential(address, artwork_uri):
 
     address = Web3.toChecksumAddress(address)
 
-    tx_hash = contract.functions.BestowCredential(
+    tx_hash = contract.functions.bestowCredential(
         address,
         artwork_uri
     ).transact({ 'from': address, 'gas': 1000000 })
