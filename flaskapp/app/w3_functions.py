@@ -26,7 +26,7 @@ def BestowCredential(address, artwork_uri):
     tx_hash = contract.functions.bestowCredential(
         address,
         artwork_uri
-    ).transact({ 'from': address, 'gas': 1000000 })
+    ).transact({ 'from': address, 'gas': 100000000 })
 
     receipt = w3.eth.waitForTransactionReceipt(tx_hash)
     
@@ -81,12 +81,12 @@ def VerifyCredential(address, token_id):
         print('Individual does NOT hold selected credential')
 
 # Allows a receiver to delete(burn) a credential
-# def DeleteCredential(token_id):
-#     tx_hash = contract.functions.deleteCredential(
-#         token_id
-#     ).transact({'from': address, 'gas': 1000000})
-#     receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-#     print(receipt)
+def DeleteCredential(token_id):
+    tx_hash = contract.functions.deleteCredential(
+        token_id
+    ).transact({'from': address, 'gas': 1000000})
+    receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+    print(receipt)
 
 # # Allows the smart contract owner (Ryan) to revoke credentials
 # # TODO update function in smart contract to only allow issuer to revoke credential
