@@ -9,8 +9,6 @@ import "@openzeppelin/contracts@4.7.0/utils/Counters.sol";
 contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
 
-    ///// FUNCTION IMPORTS FROM OPENZEPPELIN CONTRACTS WIZARD ///
-
     // The counter assigns tokenId as they are minted
     Counters.Counter private _tokenIdCounter;
 
@@ -19,6 +17,8 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
 
     // Create Credential ERC721 token
     constructor() ERC721("Vitae Digital Credentials", "VDC") {}
+
+    ///// FUNCTION IMPORTS FROM OPENZEPPELIN CONTRACTS WIZARD ///
 
     // anyone can call BestowCredential function
     function bestowCredential(address to, string memory uri) external {
@@ -62,7 +62,7 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
     function deleteCredential(uint256 tokenId) external {
         require(
             ownerOf(tokenId) == msg.sender,
-            "Only the owner can delete a credential."
+            "Only the owner or the issuer of the credential can delete it."
         );
         _burn(tokenId);
     }
