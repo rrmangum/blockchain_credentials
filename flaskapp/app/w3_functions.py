@@ -1,15 +1,17 @@
 from flask import flash
-from web3 import Web3
+from web3 import Web3, Account
 from pathlib import Path
 import json
 import os
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_PROVIDER_URI")))
 contract_address = os.getenv("SMART_CONTRACT_ADDRESS")
-
+ethereum_private_key = os.getenv("ETHEREUM_PRIVATE_KEY")
+account = Account.privateKeyToAccount(ethereum_private_key)
 
 # Mints the token into a specified address
 def BestowCredential(address, artwork_uri):
@@ -22,13 +24,22 @@ def BestowCredential(address, artwork_uri):
     )
 
     address = Web3.toChecksumAddress(address)
+    nonce = w3.eth.get_transaction_count(address)
 
-    tx_hash = contract.functions.bestowCredential(
+    txn = contract.functions.bestowCredential(
         address,
         artwork_uri
-    ).transact({ 'from': address, 'gas': 1000000 })
+<<<<<<< HEAD
+    ).build_transaction({ 'from': address, 'gas': 1000000, 'nonce': nonce })
+=======
+    ).transact({ 'from': address, 'gas': 100000000 })
+>>>>>>> f0272daf08f3e5be3cc032413bb2033226476118
 
-    receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+    signed_txn =  w3.eth.account.signTransaction(txn, private_key=ethereum_private_key)
+    txn_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)  
+
+    # receipt = w3.eth.waitForTransactionReceipt(txn_hash)
+    receipt = w3.toHex(w3.keccak(signed_txn.rawTransaction))
     
     return receipt
 
@@ -81,12 +92,12 @@ def VerifyCredential(address, token_id):
         print('Individual does NOT hold selected credential')
 
 # Allows a receiver to delete(burn) a credential
-# def DeleteCredential(token_id):
-#     tx_hash = contract.functions.deleteCredential(
-#         token_id
-#     ).transact({'from': address, 'gas': 1000000})
-#     receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-#     print(receipt)
+def DeleteCredential(token_id):
+    tx_hash = contract.functions.deleteCredential(
+        token_id
+    ).transact({'from': address, 'gas': 1000000})
+    receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+    print(receipt)
 
 # # Allows the smart contract owner (Ryan) to revoke credentials
 # # TODO update function in smart contract to only allow issuer to revoke credential

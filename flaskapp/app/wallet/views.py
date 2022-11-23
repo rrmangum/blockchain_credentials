@@ -8,7 +8,8 @@ from ..extensions import db
 from ..models import Wallet
 from ..models import Credential
 from ..models import Issuance
-# from ..w3_functions import DeleteCredential
+from ..w3_functions import *
+from web3 import Web3
 
 
 @wallet_blueprint.route("/")
@@ -46,21 +47,24 @@ def delete(id):
    
 
     if request.method == "POST":
-        issuance_to_delete.deleted_at = now
+        # issuance_to_delete.deleted_at = now
+        token_id = request.form['token_id']
 
-        try:
+        return render_template("delete.html",   now=now, id=id, token_id=token_id)  
 
-            # DeleteCredential()
+    #     try:
 
-            db.session.commit()
-            flash("Issuance Deleted")
-            return redirect('/wallets')  
+    #         DeleteCredential()
 
-        except:
-            return "Something went wrong deleting"
+    #         db.session.commit()
+    #         flash("Issuance Deleted")
+    #         return redirect('/wallets')  
 
-    else:
-        return render_template("delete.html", issuance_to_delete=issuance_to_delete,  now=now, id=id)        
+    #     except:
+    #         return "Something went wrong deleting"
+
+    # else:
+    #     return render_template("delete.html", issuance_to_delete=issuance_to_delete,  now=now, id=id, token_id=token_id)        
 
 
 

@@ -106,13 +106,12 @@ def assign_credential(id):
         for id in wallet_ids:
             selected_wallet = Wallet.query.get(id)
             txn_hash = BestowCredential(selected_wallet.address, credential.url)
-            readable_hash = txn_hash.blockHash.hex()
+            # readable_hash = txn_hash.blockHash.hex()
 
             new_issuance = Issuance(
                 wallet_id = id,
                 credential_id = credential.id,
-                transaction_hash = readable_hash
-                
+                transaction_hash = txn_hash
             )
 
             
@@ -122,3 +121,7 @@ def assign_credential(id):
         flash("Credential issued!")
         return redirect(url_for("credential.index"))
         # return render_template("credential/test.html", id=id, credential=credential, txn_hash=txn_hash)
+
+@credential_blueprint.route("/design", methods=['GET'])
+def design_credential():
+    return render_template("credential/design.html")

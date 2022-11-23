@@ -16,7 +16,7 @@ from ..s3_functions import *
 @login_required
 def user(user_id):
     wallet = Wallet.query.filter_by(user_id=current_user.id).first()
-    credentials = db.session.query(Issuance).join(Credential, Issuance.credential_id==Credential.id).filter(Issuance.wallet_id == wallet.id).all()
+    credentials = db.session.query(Issuance).join(Credential, Issuance.credential_id==Credential.id).filter(Issuance.wallet_id == wallet.id).filter(Issuance.active== True).all()
     username = current_user.name
     email = current_user.email
     profile_image = current_user.profile_image
@@ -31,7 +31,7 @@ def user(user_id):
 def edit(user_id):
     form = OptionalForm()
     wallet = Wallet.query.filter_by(user_id=current_user.id).first()
-    credentials = db.session.query(Issuance).join(Credential, Issuance.credential_id==Credential.id).filter(Issuance.wallet_id == wallet.id).all()
+    credentials = db.session.query(Issuance).join(Credential, Issuance.credential_id==Credential.id).filter(Issuance.wallet_id == wallet.id).filter(Issuance.active== True).all()
     created_at = current_user.created_at 
     username = current_user.name
     email = current_user.email
