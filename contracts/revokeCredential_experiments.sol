@@ -15,19 +15,13 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
     Counters.Counter private _tokenIdCounter;
 
     // // Mapping from token ID to minter address
-    // mapping(uint256 => address) private _minters;
+    mapping(uint256 => address) private _minters;
 
-    // Mapping owner address to token count
-    mapping(address => uint256) private _balances;
+    // // This event is emitted when ownership of any ABT changes by any mechanism. This event emits when credentials are issued, deleted, or revoked
+    // event Attest(address indexed to, uint256 indexed tokenId);
 
-    // Mapping from token ID to owner address
-    mapping(uint256 => address) private _owners;
-
-    // This event is emitted when ownership of any ABT changes by any mechanism. This event emits when credentials are issued, deleted, or revoked
-    event Attest(address indexed to, uint256 indexed tokenId);
-
-    //This event is emitted when a token is removed
-    event Revoke(address indexed to, uint256 indexed tokenId);
+    // //This event is emitted when a token is removed
+    // event Revoke(address indexed to, uint256 indexed tokenId);
 
     // Create Credential ERC721 token
     constructor() ERC721("Vitae Digital Credentials", "VDC") {}
@@ -40,6 +34,7 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
         _setTokenURI(tokenId, uri);
     }
 
+    // Necessary solidity overrides
     function _burn(uint256 tokenId)
         internal
         override(ERC721, ERC721URIStorage)
@@ -56,6 +51,7 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
         return super.tokenURI(tokenId);
     }
 
+    // Displays # of tokens issued by smart contract
     function totalSupply() public view returns (uint256) {
         return _tokenIdCounter.current();
     }
@@ -63,31 +59,10 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
     ///// VITAE contract specific functions /////
 
     // // This function mints tokens
-    function _mint(address to, uint256 tokenId) internal virtual override {
-        require(to != address(0), "ERC721: mint to the zero address");
-        require(!_exists(tokenId), "ERC721: token already minted");
-
-        _beforeTokenTransfer(address(0), to, 1);
-
-        // Check that tokenId was not minted by `_beforeTokenTransfer` hook
-        require(!_exists(tokenId), "ERC721: token already minted");
-
-        unchecked {
-            // Will not overflow unless all 2**256 token ids are minted to the same owner.
-            // Given that tokens are minted one by one, it is impossible in practice that
-            // this ever happens. Might change if we allow batch minting.
-            // The ERC fails to describe this case.
-            _balances[to] += 1;
-        }
-
-        _owners[tokenId] = to;
-
-        emit Transfer(address(0), to, tokenId);
-
-        _afterTokenTransfer(address(0), to, tokenId);
+    function _mint(address to, uint256 tokenId) internal override {
+        super._mint(to, tokenId);
+        _minters[tokenId] = msg.sender;
     }
-
-    //_minters[tokenId] = msg.sender;
 
     // This function allows the owner of the token to burn it
     function deleteCredential(uint256 tokenId) external {
@@ -101,10 +76,10 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
     // This function allows the contract owner(us) to burn the token. As written, only the contract creator(us) can revoke the credential
     // TODO: This function should also be callable by the issuer, create a modifier requiring msg.sender to be verified as tokenId issuer address
     function revokeCredential(uint256 tokenId) external {
-        // require(
-        //     _minters[tokenId] == msg.sender,
-        //     "Only the issuer can revoke a credential"
-        // );
+        require(
+            _minters[tokenId] == msg.sender,
+            "Only the issuer can revoke a credential"
+        );
         _burn(tokenId);
     }
 
@@ -120,16 +95,16 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
         );
     }
 
-    // This function emits the events to store the data
-    function _afterTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId
-    ) internal override {
-        if (from == address(0)) {
-            emit Attest(to, tokenId);
-        } else if (to == address(0)) {
-            emit Revoke(to, tokenId);
-        }
-    }
+    // // This function emits the events to store the data
+    // function _afterTokenTransfer(
+    //     address from,
+    //     address to,
+    //     uint256 tokenId
+    // ) internal override {
+    //     if (from == address(0)) {
+    //         emit Attest(to, tokenId);
+    //     } else if (to == address(0)) {
+    //         emit Revoke(to, tokenId);
+    //     }
+    // }
 }
