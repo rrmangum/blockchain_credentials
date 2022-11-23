@@ -9,16 +9,13 @@ import "@openzeppelin/contracts@4.7.0/utils/Counters.sol";
 contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
 
-    ///// function imports from OpenZeppelin contracts wizard ///
+    ///// FUNCTION IMPORTS FROM OPENZEPPELIN CONTRACTS WIZARD ///
 
     // The counter assigns tokenId as they are minted
     Counters.Counter private _tokenIdCounter;
 
-    // This event is emitted when a token is created and bound to an address
-    event Attest(address indexed to, uint256 indexed tokenId);
-
-    //This event is emitted when a token is removed
-    event Revoke(address indexed to, uint256 indexed tokenId);
+    // // Mapping from token ID to minter address
+    mapping(uint256 => address) private _minters;
 
     // Create Credential ERC721 token
     constructor() ERC721("Vitae Digital Credentials", "VDC") {}
@@ -31,6 +28,7 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
         _setTokenURI(tokenId, uri);
     }
 
+    // Necessary solidity overrides
     function _burn(uint256 tokenId)
         internal
         override(ERC721, ERC721URIStorage)
@@ -47,14 +45,20 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
         return super.tokenURI(tokenId);
     }
 
-    function totalSupply() public view returns (uint256)
-    {
+    // Displays number of credentials issued by smart contract
+    function totalSupply() public view returns (uint256) {
         return _tokenIdCounter.current();
     }
 
-    ///// VITAE contract specific functions /////
+    /// VITAE CONTRACT SPECIFIC FUNCTIONS ///
 
-    // This function allows the owner of the token to burn it
+    // This function mints credentials and is called by bestowCredential
+    function _mint(address to, uint256 tokenId) internal override {
+        super._mint(to, tokenId);
+        _minters[tokenId] = msg.sender;
+    }
+
+    // This function allows the owner of the credential to burn it
     function deleteCredential(uint256 tokenId) external {
         require(
             ownerOf(tokenId) == msg.sender,
@@ -63,13 +67,16 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
         _burn(tokenId);
     }
 
-    // This function allows the contract owner(us) to burn the token. As written, only the contract creator(us) can revoke the credential
-    // TODO: This function should also be callable by the issuer, create a modifier requiring msg.sender to be verified as tokenId issuer address
-    function revokeCredential(uint256 tokenId) external onlyOwner {
+    // This function allows the issuer to burn the credential
+    function revokeCredential(uint256 tokenId) external {
+        require(
+            _minters[tokenId] == msg.sender,
+            "Only the issuer can revoke a credential"
+        );
         _burn(tokenId);
     }
 
-    // This function stops the user from transferring the token
+    // This function stops the user from transferring the credential
     function _beforeTokenTransfer(
         address from,
         address to,
@@ -79,18 +86,5 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
             from == address(0) || to == address(0),
             "This credential cannot be transferred."
         );
-    }
-
-    // This function emits the events to store the data
-    function _afterTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId
-    ) internal override {
-        if (from == address(0)) {
-            emit Attest(to, tokenId);
-        } else if (to == address(0)) {
-            emit Revoke(to, tokenId);
-        }
     }
 }
