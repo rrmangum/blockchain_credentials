@@ -121,3 +121,7 @@ def assign_credential(id):
         flash("Credential issued!")
         return redirect(url_for("credential.index"))
         # return render_template("credential/test.html", id=id, credential=credential, txn_hash=txn_hash)
+
+@credential_blueprint.route("/design", methods=['GET'])
+def design_credential():
+    return render_template("credential/design.html")

@@ -91,8 +91,10 @@
                                 {% else %}
                                 <td >
                                     <form action="/wallets/delete/{{both.id}}" METHOD="POST">
-                                    <button class="button is-danger is-rounded is-outlined is-small" name="now" type="submit" value={{ now }} id="{{ both.id }}">Delete</button>
-                                </form>
+                                        <input type="text" placeholder="input token id" name="token_id" value="{{ token_id }}" class=" input is-danger is-small"></input>
+                                        <br/>
+                                        <input class="button is-danger is-rounded is-outlined is-small" name="delete" type="submit" value="Delete" id="{{ both.id }}"></button>
+                                    </form>
                                 </td>
                                 
                                 {% endif %}
