@@ -1,15 +1,17 @@
 from flask import flash
-from web3 import Web3
+from web3 import Web3, Account
 from pathlib import Path
 import json
 import os
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_PROVIDER_URI")))
 contract_address = os.getenv("SMART_CONTRACT_ADDRESS")
-
+ethereum_private_key = os.getenv("ETHEREUM_PRIVATE_KEY")
+account = Account.privateKeyToAccount(ethereum_private_key)
 
 # Mints the token into a specified address
 def BestowCredential(address, artwork_uri):
@@ -22,13 +24,18 @@ def BestowCredential(address, artwork_uri):
     )
 
     address = Web3.toChecksumAddress(address)
+    nonce = w3.eth.get_transaction_count(address)
 
-    tx_hash = contract.functions.bestowCredential(
+    txn = contract.functions.bestowCredential(
         address,
         artwork_uri
-    ).transact({ 'from': address, 'gas': 1000000 })
+    ).build_transaction({ 'from': address, 'gas': 1000000, 'nonce': nonce })
 
-    receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+    signed_txn =  w3.eth.account.signTransaction(txn, private_key=ethereum_private_key)
+    txn_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)  
+
+    # receipt = w3.eth.waitForTransactionReceipt(txn_hash)
+    receipt = w3.toHex(w3.keccak(signed_txn.rawTransaction))
     
     return receipt
 

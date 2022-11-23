@@ -106,13 +106,12 @@ def assign_credential(id):
         for id in wallet_ids:
             selected_wallet = Wallet.query.get(id)
             txn_hash = BestowCredential(selected_wallet.address, credential.url)
-            readable_hash = txn_hash.blockHash.hex()
+            # readable_hash = txn_hash.blockHash.hex()
 
             new_issuance = Issuance(
                 wallet_id = id,
                 credential_id = credential.id,
-                transaction_hash = readable_hash
-                
+                transaction_hash = txn_hash
             )
 
             
