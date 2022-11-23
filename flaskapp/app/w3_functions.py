@@ -29,17 +29,13 @@ def BestowCredential(address, artwork_uri):
     txn = contract.functions.bestowCredential(
         address,
         artwork_uri
-<<<<<<< HEAD
-    ).build_transaction({ 'from': address, 'gas': 1000000, 'nonce': nonce })
-=======
-    ).transact({ 'from': address, 'gas': 100000000 })
->>>>>>> f0272daf08f3e5be3cc032413bb2033226476118
+    ).build_transaction({ 'from': address, 'gas': w3.eth.gas_price, 'nonce': nonce })
 
     signed_txn =  w3.eth.account.signTransaction(txn, private_key=ethereum_private_key)
     txn_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)  
 
-    # receipt = w3.eth.waitForTransactionReceipt(txn_hash)
-    receipt = w3.toHex(w3.keccak(signed_txn.rawTransaction))
+    receipt = w3.eth.waitForTransactionReceipt(txn_hash)
+    # receipt = w3.toHex(w3.keccak(signed_txn.rawTransaction))
     
     return receipt
 

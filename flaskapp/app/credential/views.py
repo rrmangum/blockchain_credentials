@@ -103,22 +103,36 @@ def assign_credential(id):
     elif request.method == 'POST':
         credential = Credential.query.get(id)
         wallet_ids = request.form.getlist('walletCheckbox')
+        metadata = {
+            "name": "Financial Technology Certificate",
+
+            "attributes": {
+                "Issuer": "University of California Berkeley",
+                "Expiration Date": "Indefinite"
+            },
+
+            "description": "Certificate issued to graduates of the FinTech bootcamp",
+
+            "image": credential.ipfs_url,
+
+            "external_url": "https://vitae.io"
+        }
         for id in wallet_ids:
             selected_wallet = Wallet.query.get(id)
-            txn_hash = BestowCredential(selected_wallet.address, credential.url)
+            txn_hash = BestowCredential(selected_wallet.address, credential.ipfs_url)
             # readable_hash = txn_hash.blockHash.hex()
 
             new_issuance = Issuance(
                 wallet_id = id,
                 credential_id = credential.id,
-                transaction_hash = txn_hash
+                transaction_hash = txn_hash.transactionHash.hex()
             )
 
             
             db.session.add(new_issuance)
             db.session.commit()
         
-        flash("Credential issued!")
+        flash(f"Credential issued! {txn_hash.transactionHash.hex()}")
         return redirect(url_for("credential.index"))
         # return render_template("credential/test.html", id=id, credential=credential, txn_hash=txn_hash)
 
