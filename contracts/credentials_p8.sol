@@ -62,7 +62,7 @@ contract DigitalCredential is ERC721, ERC721URIStorage, Ownable {
     function deleteCredential(uint256 tokenId) external {
         require(
             ownerOf(tokenId) == msg.sender,
-            "Only the owner or the issuer of the credential can delete it."
+            "Only the owner can delete a credential."
         );
         _burn(tokenId);
     }
