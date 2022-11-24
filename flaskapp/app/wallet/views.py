@@ -41,27 +41,34 @@ def index():
 @wallet_blueprint.route("/delete/<int:id>", methods=['Post', 'GET'])
 # @login_required
 def delete(id):
+
+    # wallet = Wallet.query.filter_by(user_id=current_user.id).first()
     
     issuance_to_delete = Issuance.query.get(id)
     now = datetime.utcnow()
    
 
     if request.method == "POST":
-        # issuance_to_delete.deleted_at = now
+        issuance_to_delete.deleted_at = now
         token_id = request.form['token_id']
+        
+       
 
-        return render_template("delete.html",   now=now, id=id, token_id=token_id)  
 
-    #     try:
+        # return render_template("delete.html", issuance_to_delete=issuance_to_delete,  now=now, id=id, token_id=int(token_id))
 
-    #         DeleteCredential()
+        
 
-    #         db.session.commit()
-    #         flash("Issuance Deleted")
-    #         return redirect('/wallets')  
+        # try:
 
-    #     except:
-    #         return "Something went wrong deleting"
+        DeleteCredential(token_id, current_user.wallets[0].address )
+
+        db.session.commit()
+        flash("Issuance Deleted")
+        return redirect('/wallets')  
+
+        # except:
+        #     return "Something went wrong deleting"
 
     # else:
     #     return render_template("delete.html", issuance_to_delete=issuance_to_delete,  now=now, id=id, token_id=token_id)        

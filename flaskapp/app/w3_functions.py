@@ -88,7 +88,7 @@ def VerifyCredential(address, token_id):
         print('Individual does NOT hold selected credential')
 
 # Allows a receiver to delete(burn) a credential
-def DeleteCredential(token_id):
+def DeleteCredential(token_id, address):
     tx_hash = contract.functions.deleteCredential(
         token_id
     ).transact({'from': address, 'gas': 1000000})

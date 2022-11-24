@@ -59,5 +59,6 @@ class Issuance(db.Model):
     issued_at = db.Column(db.DateTime, default=datetime.utcnow)
     revoked_at = db.Column(db.DateTime)
     deleted_at = db.Column(db.DateTime)
+    token_id = db.Column(db.Integer)
     def __repr__(self):
         return f'<Issuance "{self.wallet} {self.credential}">'
