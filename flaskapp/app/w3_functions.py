@@ -14,7 +14,7 @@ ethereum_private_key = os.getenv("ETHEREUM_PRIVATE_KEY")
 account = Account.privateKeyToAccount(ethereum_private_key)
 
 # Mints the token into a specified address
-def BestowCredential(address, artwork_uri):
+def BestowCredential(address, recipient, artwork_uri):
     with open(Path('../contracts/credentials_abi.json')) as f:
         artwork_abi = json.load(f)
 
@@ -24,10 +24,12 @@ def BestowCredential(address, artwork_uri):
     )
 
     address = Web3.toChecksumAddress(address)
+    recipient = Web3.toChecksumAddress(recipient)
+
     nonce = w3.eth.get_transaction_count(address)
 
     txn = contract.functions.bestowCredential(
-        address,
+        recipient,
         artwork_uri
     ).build_transaction({ 'from': address, 'gas': w3.eth.gas_price, 'nonce': nonce })
 
@@ -88,18 +90,35 @@ def VerifyCredential(address, token_id):
         print('Individual does NOT hold selected credential')
 
 # Allows a receiver to delete(burn) a credential
-def DeleteCredential(token_id):
-    tx_hash = contract.functions.deleteCredential(
+def DeleteCredential(token_id, address):
+    address = Web3.toChecksumAddress(address)
+
+    nonce = w3.eth.get_transaction_count(address)
+
+    txn = contract.functions.deleteCredential(
         token_id
-    ).transact({'from': address, 'gas': 1000000})
-    receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-    print(receipt)
+    ).build_transaction({ 'from': address, 'gas': w3.eth.gas_price, 'nonce': nonce })
+    
+    signed_txn =  w3.eth.account.signTransaction(txn, private_key=ethereum_private_key)
+    txn_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)  
+
+    receipt = w3.eth.waitForTransactionReceipt(txn_hash)
+
+    return receipt
 
 # # Allows the smart contract owner (Ryan) to revoke credentials
 # # TODO update function in smart contract to only allow issuer to revoke credential
-# def RevokeCredential(token_id):
-#     tx_hash = contract.functions.revokeCredential(
-#         token_id
-#     ).transact({'from': address, 'gas': 1000000})
-#     receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-#     print(receipt)
+def RevokeCredential(token_id, address):
+    address = Web3.toChecksumAddress(address)
+
+    nonce = w3.eth.get_transaction_count(address)
+
+    txn = contract.functions.revokeCredential(
+        token_id
+    ).build_transaction({ 'from': address, 'gas': w3.eth.gas_price, 'nonce': nonce })
+
+    signed_txn =  w3.eth.account.signTransaction(txn, private_key=ethereum_private_key)
+    txn_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)  
+
+    receipt = w3.eth.waitForTransactionReceipt(txn_hash)
+    return 

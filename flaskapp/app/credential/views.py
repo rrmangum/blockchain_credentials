@@ -80,12 +80,12 @@ def index():
             full_metadata_ipfs_url = f"https://gateway.pinata.cloud/ipfs/{json.loads(metadata_pinata_response.text)['IpfsHash']}"
             
             # Remove the temp uploaded image file
-            if os.path.isfile(uploaded_image_path):
-                os.remove(uploaded_image_path)
+            # if os.path.isfile(uploaded_image_path):
+            #     os.remove(uploaded_image_path)
                 
             # Remove the temp uploaded metadata json file
-            if os.path.isfile("metadata.json"):
-                os.remove("metadata.json")
+            # if os.path.isfile("metadata.json"):
+            #     os.remove("metadata.json")
             
             # Create and save new credential record in DB, along with S3 and IPFS urls
             new_credential = Credential(
@@ -130,9 +130,10 @@ def assign_credential(id):
     elif request.method == 'POST':
         credential = Credential.query.get(id)
         wallet_ids = request.form.getlist('walletCheckbox')
+        user_wallet = current_user.wallets[0].address
         for id in wallet_ids:
             selected_wallet = Wallet.query.get(id)
-            txn_hash = BestowCredential(selected_wallet.address, credential.metadata_ipfs_url)
+            txn_hash = BestowCredential(user_wallet, selected_wallet.address, credential.metadata_ipfs_url)
             # readable_hash = txn_hash.blockHash.hex()
 
             new_issuance = Issuance(

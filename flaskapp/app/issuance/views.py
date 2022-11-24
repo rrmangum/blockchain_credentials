@@ -1,5 +1,6 @@
 from . import issuance_blueprint
 from flask import render_template, request, redirect, url_for, flash, jsonify
+from flask_login import current_user, login_required
 from ..extensions import db
 from ..models import Issuance, Wallet, Credential
 from .forms import RevokeForm
