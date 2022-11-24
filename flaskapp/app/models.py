@@ -42,6 +42,7 @@ class Credential(db.Model):
     wallet_id = db.Column(db.Integer, db.ForeignKey('wallet.id'))
     url = db.Column(db.String(255), nullable=False)
     ipfs_url = db.Column(db.String(255))
+    metadata_ipfs_url = db.Column(db.String(255))
     name = db.Column(db.String(50), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     issuances = db.relationship('Issuance', backref='credential')

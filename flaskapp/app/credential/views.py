@@ -47,7 +47,7 @@ def index():
             
             # Save image to IPFS
             pinata_base_url = "https://api.pinata.cloud/pinning/pinFileToIPFS"
-            payload={'pinataOptions': '{"cidVersion": 1}', 'pinataMetadata': '{"name": "unums_credentials_file", "keyvalues": {"company": "unums"}}'}
+            payload={'pinataOptions': '{"cidVersion": 1}', 'pinataMetadata': '{"name": "vitae_credentials_file", "keyvalues": {"company": "vitae"}}'}
             files=[
                 ('file',(filename, open(uploaded_image_path, 'rb'), 'application/octet-stream'))
             ]
@@ -57,19 +57,46 @@ def index():
             pinata_response = requests.post(pinata_base_url, headers=headers, data=payload, files=files)
             full_ipfs_url = f"https://gateway.pinata.cloud/ipfs/{json.loads(pinata_response.text)['IpfsHash']}"
             
+            
+            # Save the metadata to IPFS file
+            metadata = {
+                "name": form.name.data,
+                "attributes": {
+                    "Issuer": "Vitae.io",
+                    "Expiration Date": "Indefinite"
+                },
+                "description": form.name.data,
+                "image": full_ipfs_url,
+                "external_url": "https://vitae.io"
+            }
+            
+            with open('metadata.json', 'w') as mfp:
+                json.dump(metadata, mfp)
+    
+            metadata_files= {"file": open("metadata.json", 'rb')}
+             
+            metadata_payload={'pinataOptions': '{"cidVersion": 1}', 'pinataMetadata': '{"name": "vitae_metadata_credentials_file", "keyvalues": {"company": "vitae"}}'}
+            metadata_pinata_response = requests.post(pinata_base_url, headers=headers, data=metadata_payload, files=metadata_files)
+            full_metadata_ipfs_url = f"https://gateway.pinata.cloud/ipfs/{json.loads(metadata_pinata_response.text)['IpfsHash']}"
+            
+            # Remove the temp uploaded image file
+            if os.path.isfile(uploaded_image_path):
+                os.remove(uploaded_image_path)
+                
+            # Remove the temp uploaded metadata json file
+            if os.path.isfile("metadata.json"):
+                os.remove("metadata.json")
+            
             # Create and save new credential record in DB, along with S3 and IPFS urls
             new_credential = Credential(
                 name = form.name.data,
                 wallet_id = wallet.id,
                 url = full_s3_url,
-                ipfs_url = full_ipfs_url
+                ipfs_url = full_ipfs_url,
+                metadata_ipfs_url = full_metadata_ipfs_url
             )
             db.session.add(new_credential)
             db.session.commit()
-            
-            # Remove the temp uploaded image file
-            # if os.path.isfile(uploaded_image_path):
-            #     os.remove(uploaded_image_path)
             
             # Flash status message and redirect to index
             flash("Credential added!")
@@ -103,23 +130,9 @@ def assign_credential(id):
     elif request.method == 'POST':
         credential = Credential.query.get(id)
         wallet_ids = request.form.getlist('walletCheckbox')
-        metadata = {
-            "name": "Financial Technology Certificate",
-
-            "attributes": {
-                "Issuer": "University of California Berkeley",
-                "Expiration Date": "Indefinite"
-            },
-
-            "description": "Certificate issued to graduates of the FinTech bootcamp",
-
-            "image": credential.ipfs_url,
-
-            "external_url": "https://vitae.io"
-        }
         for id in wallet_ids:
             selected_wallet = Wallet.query.get(id)
-            txn_hash = BestowCredential(selected_wallet.address, credential.ipfs_url)
+            txn_hash = BestowCredential(selected_wallet.address, credential.metadata_ipfs_url)
             # readable_hash = txn_hash.blockHash.hex()
 
             new_issuance = Issuance(
@@ -128,7 +141,6 @@ def assign_credential(id):
                 transaction_hash = txn_hash.transactionHash.hex()
             )
 
-            
             db.session.add(new_issuance)
             db.session.commit()
         
