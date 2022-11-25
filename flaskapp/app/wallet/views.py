@@ -50,7 +50,7 @@ def delete(id):
         issuance_to_delete.deleted_at = now
         issuance_to_delete.active = False
         # token_id = request.form['token_id']
-        token_id = 3
+        token_id = 7
 
 
         # try:
