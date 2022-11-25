@@ -91,11 +91,7 @@ def VerifyCredential(address, token_id):
 
 # Allows a receiver to delete(burn) a credential
 def DeleteCredential(token_id, address):
-    address = Web3.toChecksumAddress(address)
-
-    nonce = w3.eth.get_transaction_count(address)
-
-    txn = contract.functions.deleteCredential(
+    tx_hash = contract.functions.deleteCredential(
         token_id
     ).build_transaction({ 'from': address, 'gas': w3.eth.gas_price, 'nonce': nonce })
     

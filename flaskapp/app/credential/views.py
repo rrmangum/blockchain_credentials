@@ -80,12 +80,12 @@ def index():
             full_metadata_ipfs_url = f"https://gateway.pinata.cloud/ipfs/{json.loads(metadata_pinata_response.text)['IpfsHash']}"
             
             # Remove the temp uploaded image file
-            # if os.path.isfile(uploaded_image_path):
-            #     os.remove(uploaded_image_path)
+            if os.path.isfile(uploaded_image_path):
+                os.remove(uploaded_image_path)
                 
             # Remove the temp uploaded metadata json file
-            # if os.path.isfile("metadata.json"):
-            #     os.remove("metadata.json")
+            if os.path.isfile("metadata.json"):
+                os.remove("metadata.json")
             
             # Create and save new credential record in DB, along with S3 and IPFS urls
             new_credential = Credential(
