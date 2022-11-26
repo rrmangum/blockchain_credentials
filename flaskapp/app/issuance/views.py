@@ -23,11 +23,13 @@ def index(credential_id):
         
         if form.validate_on_submit():     
             # Request the revoked issuance 
+            token_id = request.form['token_id']
+            token_id = int(token_id)
             issuance_id = request.form.get('revokeButton')
             wallet = Wallet.query.filter_by(id=issuance.wallet_id).first()
 
             # Revoke the credential on the blockchain in the users wallet
-            RevokeCredential(issuance_id, wallet.address)
+            RevokeCredential(token_id, wallet.address)
 
             # Delete the issuances that the administrator checked
             issuance = Issuance.query.filter_by(id=int(issuance_id)).first()

@@ -114,7 +114,7 @@ def RevokeCredential(token_id, address):
 
     txn = contract.functions.revokeCredential(
         token_id
-    ).build_transaction({ 'from': address, 'gas': w3.eth.gas_price, 'nonce': nonce })
+    ).build_transaction({ 'from': address, 'gas': 1000000, 'nonce': nonce })
 
     signed_txn =  w3.eth.account.signTransaction(txn, private_key=ethereum_private_key)
     txn_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)  

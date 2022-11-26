@@ -17,7 +17,7 @@ This application allows users to create, issue, receive, delete, and revoke ERC-
 - Goerli Ethereum Testnet
 - Infura
 - Metamask
-- Oppen Zeppelin ERC-721 standard (v4.7.0)
+- Open Zeppelin ERC-721 standard (v4.7.0)
 - Solidity pragma 0.8.4
 - Reference the requirements.txt for a list of application dependencies
 
@@ -55,6 +55,8 @@ flask run
 ```
 
 This will deploy the application locally and allow the user to interact with, and create and deploy their own certificates following proper setup of a Pinata IPFS image hosting account, and a valid blockchain connection.
+
+This Application is Optimized for the Goerli Ethereum Testnet. Transactions may not work on other testnets without reconfiguration of the w3_functions.py file. 
 
 ## Environment Setup 
 FLASK_ENV = development
@@ -117,6 +119,10 @@ ____
 ### Credential Administration Page
 ____
 ![Vitae Credential Administration Page](./images/credential_administration.png)
+
+### Revoke Credential Page
+____
+![Vitae Revoke Credential Page](./images/revoke_credential.png)
 
 ### About Us Page
 ____
