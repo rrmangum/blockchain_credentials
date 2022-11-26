@@ -31,7 +31,7 @@ def BestowCredential(address, recipient, artwork_uri):
     txn = contract.functions.bestowCredential(
         recipient,
         artwork_uri
-    ).build_transaction({ 'from': address, 'gas': w3.eth.gas_price, 'nonce': nonce })
+    ).build_transaction({ 'from': address, 'gas': 1000000, 'nonce': nonce })
 
     signed_txn =  w3.eth.account.signTransaction(txn, private_key=ethereum_private_key)
     txn_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)  
@@ -96,7 +96,7 @@ def DeleteCredential(token_id, address):
     nonce = w3.eth.get_transaction_count(address)
     txn = contract.functions.deleteCredential(
         token_id
-    ).build_transaction({ 'from': address, 'gas': w3.eth.gas_price, 'nonce': nonce })
+    ).build_transaction({ 'from': address, 'gas': 1000000, 'nonce': nonce })
     
     signed_txn =  w3.eth.account.signTransaction(txn, private_key=ethereum_private_key)
     txn_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)  
