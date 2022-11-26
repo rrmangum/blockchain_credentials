@@ -56,6 +56,28 @@ flask run
 
 This will deploy the application locally and allow the user to interact with, and create and deploy their own certificates following proper setup of a Pinata IPFS image hosting account, and a valid blockchain connection.
 
+## Environment Setup 
+FLASK_ENV = development
+debug = true
+
+### AWS Credentials
+AWS_ACCESS_KEY= YOUR_AUTHORIZED_KEY
+AWS_SECRET_ACCESS_KEY=YOUR_AUTHORIZED_KEY
+S3_CREDENTIAL_BUCKET_NAME=YOUR_AUTHORIZED_KEY
+S3_CREDENTIAL_BUCKET_BASE_URL=YOUR_AUTHORIZED_KEY
+S3_PROFILE_PIC_BUCKET_NAME=YOUR_AUTHORIZED_KEY
+S3_PROFILE_PIC_BUCKET_BASE_URL=YOUR_AUTHORIZED_KEY
+
+### Pinata credentials
+PINATA_API_KEY=YOUR_AUTHORIZED_KEY
+PINATA_API_SECRET_KEY=YOUR_AUTHORIZED_KEY
+PINATA_JWT_KEY=YOUR_AUTHORIZED_KEY
+
+### WEB 3 Provider
+WEB3_PROVIDER_URI=YOUR_AUTHORIZED_KEY
+SMART_CONTRACT_ADDRESs=YOUR_AUTHORIZED_KEY
+ETHEREUM_PRIVATE_KEY=YOUR_AUTHORIZED_KEY
+
 ## Smart Contract Details
 
 ---
