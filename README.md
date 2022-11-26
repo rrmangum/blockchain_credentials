@@ -69,3 +69,33 @@ RevokeCredential and deleteCredential can both be used to call the burn function
 ## App Architecture
 
 ![Flask App Architecture](https://github.com/rrmangum/blockchain_credentials/blob/main/flaskapp/app/static/images/VDC_architecure.png?raw=true)
+
+## Application Demo
+
+### Homepage
+____
+![Vitae Homepage](./images/main_page.png)
+
+### Profile Page
+____
+![Vitae Profile Page](./images/users_profile.png)
+
+### Issuers Page
+____
+![Vitae Issuers Page](./images/issuers_page.png)
+
+### Credential Design Page
+____
+![Vitae Design Credentials Page](./images/design_credential.png)
+
+### Credential Upload Page
+____
+![Vitae Upload Credentials Page](./images/upload_credential.png)
+
+### Credential Administration Page
+____
+![Vitae Credential Administration Page](./images/credential_administration.png)
+
+### About Us Page
+____
+![Vitae About Us Page](./images/about_us.png)
