@@ -52,20 +52,20 @@ def delete(id):
         # issuance_to_delete.deleted_at = now
         token_id = request.form['token_id']
         token_id = int(token_id)
-        user = current_user.wallets[0].address
+        # user = current_user.wallets[0].address
 
-        return render_template("delete.html",   now=now, id=id, token_id=int(token_id), user=user  )
+        # return render_template("delete.html",   now=now, id=id, token_id=int(token_id), user=user  )
 
-    #     try:
+        # try:
             
-    #         DeleteCredential(token_id, current_user.wallets[0].address)
+        DeleteCredential(token_id, current_user.wallets[0].address)
 
-    #         db.session.commit()
-    #         flash("Issuance Deleted")
-    #         return redirect('/wallets')  
+        db.session.commit()
+        flash("Issuance Deleted")
+        return redirect('/wallets')  
 
-    #     except:
-    #         return "Something went wrong deleting"
+        # except:
+        #     return "Something went wrong deleting"
 
     # else:
     #     return render_template("delete.html", issuance_to_delete=issuance_to_delete,  now=now, id=id, token_id=token_id)        
