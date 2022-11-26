@@ -5,6 +5,7 @@ from ..extensions import db
 from ..models import Issuance, Wallet, Credential
 from .forms import RevokeForm
 from datetime import datetime
+from ..w3_functions import *
 
 @issuance_blueprint.route("/<int:credential_id>", methods=['GET', 'POST'])
 def index(credential_id):
@@ -14,11 +15,7 @@ def index(credential_id):
     active_issuances = [] 
     for issuance in issuances:
         if issuance.active == True:
-            active_issuances.append(issuance)
-    # credential_issuance = db.session.query(Credential).join(Issuance, Credential.id==Issuance.credential_id).filter(Issuance.credential_id == credential_id).all()
-    
-
-
+            active_issuances.append(issuance)    
     if request.method == 'GET':
         return render_template("issuance/index.html", active_issuances = active_issuances, credential = credential, form=form)
 
@@ -28,6 +25,9 @@ def index(credential_id):
             # Request the revoked issuance 
             issuance_id = request.form.get('revokeButton')
             wallet = Wallet.query.filter_by(id=issuance.wallet_id).first()
+
+            # Revoke the credential on the blockchain in the users wallet
+            RevokeCredential(issuance_id, wallet.address)
 
             # Delete the issuances that the administrator checked
             issuance = Issuance.query.filter_by(id=int(issuance_id)).first()

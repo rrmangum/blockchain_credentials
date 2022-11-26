@@ -101,6 +101,8 @@ def index():
             # Flash status message and redirect to index
             flash("Credential added!")
             return redirect(url_for("credential.index"))
+        else:
+            return flash("Please Enter a Credential Name and Upload a Photo")
     
 @credential_blueprint.route("/new", methods=['GET'])
 def new_credential():

@@ -49,7 +49,7 @@ def delete(id):
    
 
     if request.method == "POST":
-        # issuance_to_delete.deleted_at = now
+        issuance_to_delete.deleted_at = now
         token_id = request.form['token_id']
         token_id = int(token_id)
         # user = current_user.wallets[0].address

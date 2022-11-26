@@ -15,7 +15,9 @@ from ..s3_functions import *
 @user_blueprint.route("/user/<user_id>", methods=['GET', 'POST'])
 @login_required
 def user(user_id):
+    # Set up the users profile page with their wallet, credential and custom user information
     wallet = Wallet.query.filter_by(user_id=current_user.id).first()
+    # Join the Issuance and Credential tables
     credentials = db.session.query(Issuance).join(Credential, Issuance.credential_id==Credential.id).filter(Issuance.wallet_id == wallet.id).filter(Issuance.active== True).all()
     username = current_user.name
     email = current_user.email
