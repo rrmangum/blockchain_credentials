@@ -12,6 +12,8 @@ ____
 * Goerli Ethereum Testnet
 * Infura
 * Metamask
+* Oppen Zeppelin ERC-721 standard (v4.7.0)
+* Solidity pragma 0.8.4
 * Reference the requirements.txt for a list of application dependencies
 
 ## Application Best Usage
@@ -42,3 +44,12 @@ This will set the application.py file as the site of deployment for the applicat
 flask run
 ```
 This will deploy the application locally and allow the user to interact with, and create and deploy their own certificates following proper setup of a Pinata IPFS image hosting account, and a valid blockchain connection. 
+
+## Smart Contract Details
+___
+
+The smart contract is based on Oppen Zeppelin's ERC-721 standards (v 4.7.0) with some added functionality. An override had been added to the _beforeTokenTransfer function to prevent any of our credentials from being transferred.
+
+The largest addition to the smart contract is the bestowCredential function. This function requires the address you are issueing the credential to and the uri that hosts said credential. It uses a modified version of the _mint function.
+
+RevokeCredential and deleteCredential can both be used to call the burn function from the owner and issuer of the credential respectively.
