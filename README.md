@@ -56,13 +56,15 @@ flask run
 
 This will deploy the application locally and allow the user to interact with, and create and deploy their own certificates following proper setup of a Pinata IPFS image hosting account, and a valid blockchain connection.
 
-This Application is Optimized for the Goerli Ethereum Testnet. Transactions may not work on other testnets without reconfiguration of the w3_functions.py file. 
+This Application is Optimized for the Goerli Ethereum Testnet. Transactions may not work on other testnets without reconfiguration of the w3_functions.py file.
 
-## Environment Setup 
+## Environment Setup
+
 FLASK_ENV = development
 debug = true
 
 ### AWS Credentials
+
 AWS_ACCESS_KEY= YOUR_AUTHORIZED_KEY
 AWS_SECRET_ACCESS_KEY=YOUR_AUTHORIZED_KEY
 S3_CREDENTIAL_BUCKET_NAME=YOUR_AUTHORIZED_KEY
@@ -71,11 +73,13 @@ S3_PROFILE_PIC_BUCKET_NAME=YOUR_AUTHORIZED_KEY
 S3_PROFILE_PIC_BUCKET_BASE_URL=YOUR_AUTHORIZED_KEY
 
 ### Pinata credentials
+
 PINATA_API_KEY=YOUR_AUTHORIZED_KEY
 PINATA_API_SECRET_KEY=YOUR_AUTHORIZED_KEY
 PINATA_JWT_KEY=YOUR_AUTHORIZED_KEY
 
 ### WEB 3 Provider
+
 WEB3_PROVIDER_URI=YOUR_AUTHORIZED_KEY
 SMART_CONTRACT_ADDRESs=YOUR_AUTHORIZED_KEY
 ETHEREUM_PRIVATE_KEY=YOUR_AUTHORIZED_KEY
@@ -97,33 +101,59 @@ RevokeCredential and deleteCredential can both be used to call the burn function
 ## Application Demo
 
 ### Homepage
-____
+
+---
+
 ![Vitae Homepage](./images/main_page.png)
 
+Currently connectivity with MetaMask or other wallet providers is not supported in the application. Make sure to save your Ethereum private key in your local .env in order to sign transactions.
+
 ### Profile Page
-____
+
+---
+
 ![Vitae Profile Page](./images/users_profile.png)
 
+The profile page is completely voluntary information and nothing on that page is required to use the application. This profile page exists for future use in the event users want to supply personal data to facilitate email notifications from the application.
+
 ### Issuers Page
-____
+
+---
+
 ![Vitae Issuers Page](./images/issuers_page.png)
 
+The issuers page is where anyone can upload a credential image file or design a credential. Once the credential is created here it is pinned to IPFS and stored in a local database. Once created, issuers can click on "issue", which will invoke the smart contract functions through the Goerli testnet.
+
 ### Credential Design Page
-____
+
+---
+
 ![Vitae Design Credentials Page](./images/design_credential.png)
 
 ### Credential Upload Page
-____
+
+---
+
 ![Vitae Upload Credentials Page](./images/upload_credential.png)
 
 ### Credential Administration Page
-____
+
+---
+
 ![Vitae Credential Administration Page](./images/credential_administration.png)
 
+This page is accessed through "view issuances" from the issuers page. This allows the issuer to revoke credentials that are being held in other wallets.
+
 ### Revoke Credential Page
-____
+
+---
+
 ![Vitae Revoke Credential Page](./images/revoke_credential.png)
 
+Revoke the credential by supplying the tokenId which can be found from Goerli testnet etherscan, by supplying the minted credential transaction hash.
+
 ### About Us Page
-____
+
+---
+
 ![Vitae About Us Page](./images/about_us.png)
