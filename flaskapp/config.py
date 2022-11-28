@@ -45,5 +45,5 @@ class TestingConfig(Config):
     # SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, 'test.db')
 
 class ProductionConfig(Config):
-    FLASK_ENV = 'production'
-    # SQLALCHEMY_DATABASE_URI = os.getenv('PROD_DATABASE_URI', default="sqlite:///" + os.path.join(basedir, 'prod.db'))
+    CONFIG_TYPE = 'production'
+    SQLALCHEMY_DATABASE_URI = "postgres://zogvzehrhgduku:48732a26f71aecab798ef5d032c69c06163d6d87b7543ff07504db7496ab773f@ec2-35-170-21-76.compute-1.amazonaws.com:5432/dffj0kbaho7aba"
