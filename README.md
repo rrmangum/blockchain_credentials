@@ -25,6 +25,12 @@ This application allows users to create, issue, receive, delete, and revoke ERC-
 
 ---
 
+**The preferred method for using this application is to proceed to [this link](https://blockchaincredentials.herokuapp.com/). Import a new Ethereum wallet address into your MetaMask extension and supply it this private key: 245cf72c4e86d2eb6c5bffdd8df6d565f40534572bd95f8b76937bb75e61d72a. Use this address when interacting with the application.**
+
+---
+
+If you prefer to build the application locally follow the steps below.
+
 The main directory for this application is stored in the /flaskapp directory. The application is being deployed through the application.py file. To run the application ensure that you have an environment set up with all of the necessary dependencies installed. To install these dependencies in your terminal run:
 
 ```
