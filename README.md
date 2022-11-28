@@ -1,4 +1,4 @@
-# Vitae Digital Credentials Application
+# Vitae Digital Credentials
 
 ---
 
@@ -29,7 +29,7 @@ This application allows users to create, issue, receive, delete, and revoke ERC-
 
 ---
 
-If you prefer to build the application locally follow the steps below.
+If you prefer to build the application locally, follow the steps below.
 
 The main directory for this application is stored in the /flaskapp directory. The application is being deployed through the application.py file. To run the application ensure that you have an environment set up with all of the necessary dependencies installed. To install these dependencies in your terminal run:
 
