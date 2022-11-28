@@ -2,7 +2,11 @@
 
 ---
 
-This application allows users to create, issue, receive, delete, and revoke ERC-721 standard NFTs that serve as digital credentials. The credentials are non-transferable, but can be burned by the holder of the credential or burned by the original minter. The platform allows any interested person to create credentials through the smart contract. Currently the revoke credential function is not tied to any UI feature, but will be added in the next sprint.
+Vitae Digital Credentials is a consumer facing blockchain credentialing platform focused on technology abstraction and ease of use.
+
+This application allows users to create, issue, receive, delete, and revoke ERC-721 standard NFTs that serve as digital credentials. The credentials are non-transferable, but can be burned by the holder of the credential or by the original minter. The platform allows any interested person to create credentials through the smart contract located on the Ethereum Goerli testnet.
+
+The digital credentials created through this platform are meant to represent life's achievements in a verifiable, trustless manner. They can represent college degrees, training certificates, proof of employment or any other use case that an issuing authority chooses to create. These credentials can be used to represent an on-chain resume of a user's personal and professional achievements.
 
 ## Technology
 
@@ -100,7 +104,17 @@ The largest addition to the smart contract is the bestowCredential function. Thi
 
 RevokeCredential and deleteCredential can both be used to call the burn function from the owner and issuer of the credential respectively.
 
+## Road Map
+
+---
+
+- Build the application on zkSync's testnet
+- Provide a wallet creation feature for issuing organizations or persons through smart contract wallet providers
+- Incorporate immutable metadata storage
+
 ## App Architecture
+
+---
 
 ![Flask App Architecture](https://github.com/rrmangum/blockchain_credentials/blob/main/flaskapp/app/static/images/VDC_architecure.png?raw=true)
 
@@ -157,9 +171,3 @@ This page is accessed through "view issuances" from the issuers page. This allow
 ![Vitae Revoke Credential Page](./images/revoke_credential.png)
 
 Revoke the credential by supplying the tokenId which can be found from Goerli testnet etherscan, by supplying the minted credential transaction hash.
-
-### About Us Page
-
----
-
-![Vitae About Us Page](./images/about_us.png)
